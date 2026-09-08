@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n="meta.title.projects">Projects — Sufyan Arshad Kadiwala</title>
+<meta name="description" data-i18n-content="meta.desc.projects" content="Data science and machine learning projects by Sufyan Arshad Kadiwala." />
+<link rel="canonical" href="https://sufyankadiwala.de/projects.html" />
+
+<!-- Link previews (LinkedIn, WhatsApp, Slack, email clients) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Sufyan Arshad Kadiwala" />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:locale:alternate" content="de_DE" />
+<meta property="og:title" content="Projects — Sufyan Arshad Kadiwala" />
+<meta property="og:description" content="Data science and machine learning projects by Sufyan Arshad Kadiwala." />
+<meta property="og:url" content="https://sufyankadiwala.de/projects.html" />
+<meta property="og:image" content="https://sufyankadiwala.de/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Sufyan Arshad Kadiwala — AI &amp; Robotics Master's student, open to Werkstudent roles" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Projects — Sufyan Arshad Kadiwala" />
+<meta name="twitter:description" content="Data science and machine learning projects by Sufyan Arshad Kadiwala." />
+<meta name="twitter:image" content="https://sufyankadiwala.de/assets/og-image.png" />
+<meta name="theme-color" content="#0e7c86" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230e7c86'/%3E%3Ctext x='50' y='68' font-size='55' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=e5fb2a60" />
+
+<!-- Set theme + language before first paint so there is no flash -->
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add("js");
+  var theme = "light", lang = "en";
+  try {
+    theme = localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    lang = localStorage.getItem("lang") ||
+      ((navigator.language || "en").slice(0, 2).toLowerCase() === "de" ? "de" : "en");
+  } catch (e) {}
+  d.setAttribute("data-theme", theme);
+  d.setAttribute("data-lang", lang);
+  d.setAttribute("lang", lang);
+})();
+</script>
+</head>
+<body data-current="projects">
+
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">Sufyan<span>.</span></a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="index.html" data-page="index" data-i18n="nav.home">Home</a>
+      <a href="about.html" data-page="about" data-i18n="nav.about">About</a>
+      <a href="projects.html" data-page="projects" data-i18n="nav.projects">Projects</a>
+      <a href="certificates.html" data-page="certificates" data-i18n="nav.certificates">Certificates</a>
+      <a href="contact.html" data-page="contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="lang-switch" role="group" aria-label="Change language" data-i18n-aria="nav.lang">
+        <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-btn="de" aria-pressed="false">DE</button>
+      </div>
+
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" data-i18n-aria="nav.theme" data-i18n-title="nav.theme" title="Toggle dark mode">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <button id="menuToggle" class="icon-btn menu-toggle" aria-label="Open menu" data-i18n-aria="nav.menu.open" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="section page-hero">
+    <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="container hero-anim">
+      <p class="section-eyebrow" data-i18n="projects.eyebrow">Projects</p>
+      <h1 class="section-title" data-i18n="projects.title">Things I've Built</h1>
+      <p class="section-intro" data-i18n="projects.intro">A mix of machine learning projects and small web apps. Click a card to view the code — some link to a runnable notebook too.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <noscript><p class="nojs-note" data-i18n="footer.nojs">This site needs JavaScript for the language toggle and the project list. Everything else works without it.</p></noscript>
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>&copy; <span id="year">2026</span> Sufyan Arshad Kadiwala. <span data-i18n="footer.text">Built with HTML, CSS &amp; JavaScript.</span></p>
+    <p class="footer-legal"><a href="impressum.html" data-i18n="footer.impressum">Impressum</a></p>
+  </div>
+</footer>
+
+<script src="js/i18n.js?v=66c7e456"></script>
+<script src="js/script.js?v=a3c15bc7"></script>
+</body>
+</html>

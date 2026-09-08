@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1115"/>
+      <stop offset="100%" stop-color="#12222a"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4fd1c5" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#4fd1c5" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0e7c86" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#0e7c86" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1010" cy="120" r="330" fill="url(#glow1)"/>
+  <circle cx="150" cy="560" r="300" fill="url(#glow2)"/>
+
+  <!-- accent rule -->
+  <rect x="80" y="118" width="64" height="5" rx="2.5" fill="#4fd1c5"/>
+
+  <text x="80" y="186" font-family="Helvetica, Arial, sans-serif" font-size="31" font-weight="500" fill="#4fd1c5" letter-spacing="3">AI &amp; ROBOTICS  ·  DATA SCIENCE  ·  DEUTSCH B1</text>
+
+  <text x="80" y="288" font-family="Helvetica, Arial, sans-serif" font-size="82" font-weight="bold" fill="#ffffff" letter-spacing="-2">Sufyan Arshad Kadiwala</text>
+
+  <text x="80" y="358" font-family="Helvetica, Arial, sans-serif" font-size="38" font-weight="400" fill="#b9c1cc">Master&#8217;s student, Hochschule Hof &#8212; Machine Learning</text>
+  <text x="80" y="410" font-family="Helvetica, Arial, sans-serif" font-size="38" font-weight="400" fill="#b9c1cc">projects, from models to working web apps.</text>
+
+  <!-- availability pills -->
+  <g>
+    <rect x="80" y="470" width="462" height="62" rx="31" fill="#4fd1c5" fill-opacity="0.14" stroke="#4fd1c5" stroke-opacity="0.55" stroke-width="2"/>
+    <circle cx="118" cy="501" r="8" fill="#4fd1c5"/>
+    <text x="140" y="512" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#4fd1c5">Werkstudent &#183; 20 h/week</text>
+
+    <rect x="562" y="470" width="380" height="62" rx="31" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.20" stroke-width="2"/>
+    <text x="752" y="512" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#dfe4ea" text-anchor="middle">Hof &#183; Remote / Hybrid</text>
+  </g>
+
+  <!-- SK mark -->
+  <rect x="988" y="120" width="132" height="132" rx="30" fill="#4fd1c5"/>
+  <text x="1054" y="211" font-family="Helvetica, Arial, sans-serif" font-size="62" font-weight="bold" fill="#0f1115" text-anchor="middle">SK</text>
+</svg>

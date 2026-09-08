@@ -1,0 +1,15 @@
+.DS_Store
+**/.DS_Store
+
+# local tooling / not part of the site
+.claude/
+graphify-out/
+
+# original certificate folder (root only) — the site serves assets/certificates/
+/certificates/
+
+# unused 1.2 MB source for profile.jpg
+assets/sufyan image.png
+
+# CV working files: contain personal data and are not linked from the site
+/cv/

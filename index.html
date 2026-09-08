@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n="meta.title.index">Sufyan Arshad Kadiwala — Data Science &amp; ML Portfolio</title>
+<meta name="description" data-i18n-content="meta.desc.index" content="Portfolio of Sufyan Arshad Kadiwala — Master's student in AI &amp; Robotics, showcasing data science and machine learning projects. Available as a Werkstudent, 20 h/week, remote or hybrid." />
+<link rel="canonical" href="https://sufyankadiwala.de/index.html" />
+
+<!-- Link previews (LinkedIn, WhatsApp, Slack, email clients) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Sufyan Arshad Kadiwala" />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:locale:alternate" content="de_DE" />
+<meta property="og:title" content="Sufyan Arshad Kadiwala — Data Science &amp; ML Portfolio" />
+<meta property="og:description" content="Portfolio of Sufyan Arshad Kadiwala — Master's student in AI &amp; Robotics, showcasing data science and machine learning projects. Available as a Werkstudent, 20 h/week, remote or hybrid." />
+<meta property="og:url" content="https://sufyankadiwala.de/index.html" />
+<meta property="og:image" content="https://sufyankadiwala.de/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Sufyan Arshad Kadiwala — AI &amp; Robotics Master's student, open to Werkstudent roles" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sufyan Arshad Kadiwala — Data Science &amp; ML Portfolio" />
+<meta name="twitter:description" content="Portfolio of Sufyan Arshad Kadiwala — Master's student in AI &amp; Robotics, showcasing data science and machine learning projects. Available as a Werkstudent, 20 h/week, remote or hybrid." />
+<meta name="twitter:image" content="https://sufyankadiwala.de/assets/og-image.png" />
+<meta name="theme-color" content="#0e7c86" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230e7c86'/%3E%3Ctext x='50' y='68' font-size='55' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=e5fb2a60" />
+
+<!-- Set theme + language before first paint so there is no flash -->
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add("js");
+  var theme = "light", lang = "en";
+  try {
+    theme = localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    lang = localStorage.getItem("lang") ||
+      ((navigator.language || "en").slice(0, 2).toLowerCase() === "de" ? "de" : "en");
+  } catch (e) {}
+  d.setAttribute("data-theme", theme);
+  d.setAttribute("data-lang", lang);
+  d.setAttribute("lang", lang);
+})();
+</script>
+</head>
+<body data-current="index">
+
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">Sufyan<span>.</span></a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="index.html" data-page="index" data-i18n="nav.home">Home</a>
+      <a href="about.html" data-page="about" data-i18n="nav.about">About</a>
+      <a href="projects.html" data-page="projects" data-i18n="nav.projects">Projects</a>
+      <a href="certificates.html" data-page="certificates" data-i18n="nav.certificates">Certificates</a>
+      <a href="contact.html" data-page="contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="lang-switch" role="group" aria-label="Change language" data-i18n-aria="nav.lang">
+        <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-btn="de" aria-pressed="false">DE</button>
+      </div>
+
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" data-i18n-aria="nav.theme" data-i18n-title="nav.theme" title="Toggle dark mode">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <button id="menuToggle" class="icon-btn menu-toggle" aria-label="Open menu" data-i18n-aria="nav.menu.open" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="container hero-anim hero-inner">
+      <p class="eyebrow" data-i18n="hero.eyebrow">Hi, I'm</p>
+      <h1 class="hero-title" data-i18n="hero.title">Sufyan Arshad Kadiwala</h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">Master's Student in <strong>AI &amp; Robotics</strong> &middot; Data Science &amp; Machine Learning</p>
+      <p class="hero-desc" data-i18n="hero.desc">
+        I build practical machine learning projects — from regression &amp; classification models
+        to small AI-powered web apps. Currently studying at Hof University of Applied Sciences, Germany,
+        and looking for a <strong>Werkstudent</strong> position, an internship, or remote data science work.
+      </p>
+
+      <div class="hero-actions">
+        <a href="projects.html" class="btn btn-primary" data-i18n="hero.cta.projects">View Projects</a>
+        <a href="about.html" class="btn btn-ghost" data-i18n="hero.cta.about">About Me</a>
+        <a href="cv.pdf" class="btn btn-ghost btn-resume" data-i18n="hero.cta.resume">CV &darr;</a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="https://github.com/sufyan1105" target="_blank" rel="noopener" aria-label="GitHub profile" data-i18n-aria="hero.social.github"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.29 9.4 7.86 10.94.57.1.78-.25.78-.55v-1.94c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.78 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.58.24 2.75.12 3.04.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.08.78 2.18v3.23c0 .3.2.66.79.55A10.51 10.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg></a>
+        <a href="https://www.linkedin.com/in/sufyan-arshad-kadiwala-a35717290/" target="_blank" rel="noopener" aria-label="LinkedIn profile" data-i18n-aria="hero.social.linkedin"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg></a>
+        <a href="mailto:kadiwalasufyan03@gmail.com" data-email-link aria-label="Send email" data-i18n-aria="hero.social.email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2.5 5.5h19v13h-19z"/><path d="m3 6 9 7 9-7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVAILABILITY -->
+  <section class="section section-alt" id="availability">
+    <div class="container">
+      <div class="avail-head">
+        <div>
+          <p class="section-eyebrow" data-i18n="avail.eyebrow">Availability</p>
+          <h2 class="section-title" data-i18n="avail.title">Open to work — right now</h2>
+        </div>
+        <span class="status-dot" data-i18n="avail.start.value">Immediately</span>
+      </div>
+
+      <div class="avail-grid">
+        <div class="avail-card reveal">
+          <p class="label" data-i18n="avail.hours.label">Hours</p>
+          <p class="value" data-i18n="avail.hours.value">20 h / week</p>
+          <p class="note" data-i18n="avail.hours.note">During the semester, as permitted by my student visa. Full-time during semester breaks.</p>
+        </div>
+        <div class="avail-card reveal">
+          <p class="label" data-i18n="avail.roles.label">Looking for</p>
+          <p class="value" data-i18n="avail.roles.value">Werkstudent &middot; Internship</p>
+          <p class="note" data-i18n="avail.roles.note">Data Science, Machine Learning, AI — remote or hybrid.</p>
+        </div>
+        <div class="avail-card reveal">
+          <p class="label" data-i18n="avail.location.label">Based in</p>
+          <p class="value" data-i18n="avail.location.value">Hof, Bavaria</p>
+          <p class="note" data-i18n="avail.location.note">Remote or hybrid suits me best from Hof, and I&#39;m happy to travel for on-site days.</p>
+        </div>
+        <div class="avail-card reveal">
+          <p class="label" data-i18n="avail.lang.label">Languages</p>
+          <p class="value" data-i18n="avail.lang.value">German B1 &middot; English C1</p>
+          <p class="note" data-i18n="avail.lang.note">Actively improving my German — happy to hold the interview in German.</p>
+        </div>
+        <div class="avail-card reveal">
+          <p class="label" data-i18n="avail.start.label">Start date</p>
+          <p class="value" data-i18n="avail.start.value">Immediately</p>
+          <p class="note" data-i18n="avail.start.note">Notice period: none. I can start as soon as you need me.</p>
+        </div>
+      </div>
+
+      <div class="avail-footer">
+        <a href="contact.html" class="btn btn-primary" data-i18n="avail.cta">Get in touch &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO TEASER -->
+  <section class="section" id="intro">
+    <div class="container about-grid">
+      <div class="avatar-wrap reveal">
+        <div class="avatar no-photo">
+          <img src="assets/profile.jpg" alt="Sufyan Arshad Kadiwala" data-i18n-alt="about.photo.alt" width="150" height="150" />
+          <span class="avatar-initials" aria-hidden="true">SK</span>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <p class="section-eyebrow" data-i18n="intro.eyebrow">About</p>
+        <h2 class="section-title" data-i18n="intro.title">Quick intro</h2>
+        <p class="about-text" data-i18n="intro.text">
+          I'm a Master's student in <strong>AI &amp; Robotics</strong> at Hof University of Applied Sciences, Germany,
+          building on a Bachelor's degree in AI &amp; Data Science. I like turning raw data into working
+          models — and working models into things people can actually click on and use.
+        </p>
+        <div class="intro-actions">
+          <a href="about.html" class="btn btn-ghost" data-i18n="intro.cta">More about me &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  <section class="section section-alt" id="featured">
+    <div class="container">
+      <p class="section-eyebrow" data-i18n="featured.eyebrow">Selected Work</p>
+      <h2 class="section-title" data-i18n="featured.title">A few things I've built</h2>
+      <p class="section-intro" data-i18n="featured.intro">A quick sample of my machine learning and web projects.</p>
+
+      <noscript><p class="nojs-note" data-i18n="footer.nojs">This site needs JavaScript for the language toggle and the project list. Everything else works without it.</p></noscript>
+      <div class="project-grid" id="featuredGrid"></div>
+
+      <div class="section-footer-link">
+        <a href="projects.html" class="btn btn-ghost" data-i18n="featured.cta">View All Projects &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>&copy; <span id="year">2026</span> Sufyan Arshad Kadiwala. <span data-i18n="footer.text">Built with HTML, CSS &amp; JavaScript.</span></p>
+    <p class="footer-legal"><a href="impressum.html" data-i18n="footer.impressum">Impressum</a></p>
+  </div>
+</footer>
+
+<script src="js/i18n.js?v=66c7e456"></script>
+<script src="js/script.js?v=a3c15bc7"></script>
+</body>
+</html>
