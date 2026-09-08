@@ -54,10 +54,7 @@ SHELL = """<!DOCTYPE html>
 
 <link rel="icon" href="{favicon}" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-
+<!-- Fonts are self-hosted in assets/fonts (see css/style.css) - no request leaves this origin -->
 <link rel="stylesheet" href="css/style.css?v={v_css}" />
 
 <!-- Set theme + language before first paint so there is no flash -->
@@ -119,7 +116,11 @@ SHELL = """<!DOCTYPE html>
 <footer class="site-footer">
   <div class="container footer-inner">
     <p>&copy; <span id="year">2026</span> Sufyan Arshad Kadiwala. <span data-i18n="footer.text">Built with HTML, CSS &amp; JavaScript.</span></p>
-    <p class="footer-legal"><a href="impressum.html" data-i18n="footer.impressum">Impressum</a></p>
+    <p class="footer-legal">
+      <a href="impressum.html" data-i18n="footer.impressum">Impressum</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="datenschutz.html" data-i18n="footer.datenschutz">Datenschutzerkl&auml;rung</a>
+    </p>
   </div>
 </footer>
 
@@ -423,15 +424,15 @@ IMPRESSUM_BODY = """
       <h2 data-i18n="imp.h.provider">Angaben gem&auml;&szlig; &sect; 5 DDG</h2>
       <p>
         Sufyan Arshad Kadiwala<br />
-        <span class="legal-todo">[Stra&szlig;e und Hausnummer]</span><br />
-        <span class="legal-todo">[PLZ]</span> Hof<br />
+        Alsenberger Stra&szlig;e 53<br />
+        95028 Hof<br />
         Deutschland
       </p>
 
       <h2 data-i18n="imp.h.contact">Kontakt</h2>
       <p>
         E-Mail: <a href="mailto:kadiwalasufyan03@gmail.com" data-email-link><span data-email-text>kadiwalasufyan03@gmail.com</span></a><br />
-        Telefon: <span class="legal-todo">[Telefonnummer]</span>
+        Telefon: +49 176 28266324
       </p>
 
       <h2 data-i18n="imp.h.responsible">Verantwortlich f&uuml;r den Inhalt nach &sect; 18 Abs. 2 MStV</h2>
@@ -445,6 +446,45 @@ IMPRESSUM_BODY = """
 
       <h2 data-i18n="imp.h.copyright">Urheberrecht</h2>
       <p data-i18n="imp.copyright.body">&hellip;</p>
+    </div>
+  </section>
+"""
+
+
+DATENSCHUTZ_BODY = """
+  <section class="section page-hero">
+    <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="container hero-anim">
+      <p class="section-eyebrow" data-i18n="ds.eyebrow">Datenschutz</p>
+      <h1 class="section-title" data-i18n="ds.title">Datenschutzerkl&auml;rung</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container legal">
+      <h2 data-i18n="ds.h.controller">Verantwortlicher</h2>
+      <p data-i18n="ds.controller.body">&hellip;</p>
+
+      <h2 data-i18n="ds.h.hosting">Hosting und Server-Logfiles</h2>
+      <p data-i18n="ds.hosting.body">&hellip;</p>
+
+      <h2 data-i18n="ds.h.cookies">Cookies, Analyse und Tracking</h2>
+      <p data-i18n="ds.cookies.body">&hellip;</p>
+
+      <h2 data-i18n="ds.h.fonts">Schriftarten</h2>
+      <p data-i18n="ds.fonts.body">&hellip;</p>
+
+      <h2 data-i18n="ds.h.contact">Kontaktaufnahme per E-Mail</h2>
+      <p data-i18n="ds.contact.body">&hellip;</p>
+
+      <h2 data-i18n="ds.h.links">Externe Links</h2>
+      <p data-i18n="ds.links.body">&hellip;</p>
+
+      <h2 data-i18n="ds.h.ssl">SSL-/TLS-Verschl&uuml;sselung</h2>
+      <p data-i18n="ds.ssl.body">&hellip;</p>
+
+      <h2 data-i18n="ds.h.rights">Ihre Rechte</h2>
+      <p data-i18n="ds.rights.body">&hellip;</p>
     </div>
   </section>
 """
@@ -465,6 +505,9 @@ PAGES = {
     "impressum": ("impressum.html", IMPRESSUM_BODY,
                   "Impressum — Sufyan Arshad Kadiwala",
                   "Impressum gem&auml;&szlig; § 5 DDG."),
+    "datenschutz": ("datenschutz.html", DATENSCHUTZ_BODY,
+                    "Datenschutzerkl&auml;rung — Sufyan Arshad Kadiwala",
+                    "Datenschutzerkl&auml;rung f&uuml;r sufyankadiwala.de gem&auml;&szlig; DSGVO."),
     "contact": ("contact.html", CONTACT_BODY,
                 "Contact — Sufyan Arshad Kadiwala",
                 "Get in touch with Sufyan Arshad Kadiwala — open to Werkstudent and internship roles in Germany."),
