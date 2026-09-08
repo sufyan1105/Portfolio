@@ -13,3 +13,6 @@ assets/sufyan image.png
 
 # CV working files: contain personal data and are not linked from the site
 /cv/
+
+# notebook source repo (has its own .git; would become a broken gitlink)
+/Used Car Price Prediction/

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Used Car Price Estimator — Sufyan Arshad Kadiwala</title>
+<meta name="description" content="An interactive used-car price estimator: a Random Forest trained on 15,411 CarDekho listings, running entirely in your browser." />
+<link rel="canonical" href="https://sufyankadiwala.de/projects/used-car-price/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Used Car Price Estimator — Sufyan Arshad Kadiwala" />
+<meta property="og:description" content="A Random Forest trained on 15,411 CarDekho listings, running entirely in your browser — no server." />
+<meta property="og:url" content="https://sufyankadiwala.de/projects/used-car-price/" />
+<meta property="og:image" content="https://sufyankadiwala.de/assets/og-image.png" />
+<meta name="theme-color" content="#0e7c86" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230e7c86'/%3E%3Ctext x='50' y='68' font-size='55' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E" />
+
+<link rel="stylesheet" href="../../css/style.css" />
+
+<!-- Same theme bootstrap as the rest of the site, sharing the localStorage key -->
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add("js");
+  var theme = "light";
+  try {
+    theme = localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  } catch (e) {}
+  d.setAttribute("data-theme", theme);
+})();
+</script>
+
+<style>
+  .demo-wrap { max-width: 940px; }
+  .demo-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; align-items: start; }
+
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block; margin-bottom: 6px;
+    font-size: .82rem; font-weight: 600; color: var(--text);
+  }
+  .field .hint { font-weight: 400; color: var(--text-muted); font-size: .76rem; }
+  .field input, .field select {
+    width: 100%; padding: 10px 12px;
+    font: inherit; font-size: .92rem;
+    color: var(--text); background: var(--card);
+    border: 1px solid var(--border); border-radius: 9px;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .field input:focus, .field select:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .result {
+    position: sticky; top: 90px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 26px;
+  }
+  .result .label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--text-muted); margin: 0 0 10px;
+  }
+  .price {
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem); font-weight: 800;
+    letter-spacing: -.02em; color: var(--accent);
+    margin: 0 0 4px; line-height: 1.15;
+  }
+  .price-sub { color: var(--text-muted); font-size: .88rem; margin: 0 0 18px; }
+  .result-note {
+    border-top: 1px solid var(--border); padding-top: 16px; margin-top: 4px;
+    color: var(--text-muted); font-size: .82rem; line-height: 1.65;
+  }
+  .status { font-size: .82rem; color: var(--text-muted); }
+  .status.error { color: #d9534f; font-weight: 600; }
+
+  .metrics { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .metric {
+    background: var(--bg-alt); border: 1px solid var(--border);
+    border-radius: 999px; padding: 5px 12px;
+    font-size: .78rem; color: var(--text-muted);
+  }
+  .metric b { color: var(--text); font-weight: 700; }
+
+  .backlink { display: inline-flex; align-items: center; gap: 6px; font-size: .88rem; color: var(--text-muted); }
+  .backlink:hover { color: var(--accent); }
+
+  @media (max-width: 820px) {
+    .demo-grid { grid-template-columns: 1fr; }
+    .result { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="../../index.html" class="logo">Sufyan<span>.</span></a>
+    <div class="nav-actions">
+      <a class="backlink" href="../../projects.html">&larr; All projects</a>
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section page-hero">
+    <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="container hero-anim demo-wrap">
+      <p class="section-eyebrow">Live demo</p>
+      <h1 class="section-title">Used Car Price Estimator</h1>
+      <p class="section-intro">
+        A Random Forest trained on 15,411 CarDekho listings. The model runs
+        entirely in your browser — there is no server, and nothing you type is sent anywhere.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 28px;">
+    <div class="container demo-wrap">
+
+      <div class="metrics">
+        <span class="metric">R&sup2; <b>0.909</b></span>
+        <span class="metric">MAE <b>&#8377;1.13 lakh</b></span>
+        <span class="metric"><b>40</b> trees</span>
+        <span class="metric"><b>44</b> features</span>
+        <span class="metric"><b>15,411</b> listings</span>
+      </div>
+
+      <div class="demo-grid">
+        <form id="carForm" novalidate>
+          <div class="field">
+            <label for="brand">Brand</label>
+            <select id="brand" name="brand"></select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="vehicle_age">Vehicle age <span class="hint">(years)</span></label>
+              <input type="number" id="vehicle_age" name="vehicle_age" min="0" max="29" step="1" value="6" />
+            </div>
+            <div class="field">
+              <label for="km_driven">Kilometres driven</label>
+              <input type="number" id="km_driven" name="km_driven" min="100" max="3800000" step="1000" value="50000" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="fuel_type">Fuel type</label>
+              <select id="fuel_type" name="fuel_type"></select>
+            </div>
+            <div class="field">
+              <label for="transmission_type">Transmission</label>
+              <select id="transmission_type" name="transmission_type"></select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="seller_type">Seller type</label>
+            <select id="seller_type" name="seller_type"></select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="mileage">Mileage <span class="hint">(kmpl)</span></label>
+              <input type="number" id="mileage" name="mileage" min="4" max="33.5" step="0.1" value="19.7" />
+            </div>
+            <div class="field">
+              <label for="engine">Engine <span class="hint">(CC)</span></label>
+              <input type="number" id="engine" name="engine" min="793" max="6592" step="1" value="1248" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="max_power">Max power <span class="hint">(bhp)</span></label>
+              <input type="number" id="max_power" name="max_power" min="38.4" max="626" step="0.1" value="88.5" />
+            </div>
+            <div class="field">
+              <label for="seats">Seats</label>
+              <input type="number" id="seats" name="seats" min="2" max="9" step="1" value="5" />
+            </div>
+          </div>
+        </form>
+
+        <aside class="result">
+          <p class="label">Estimated selling price</p>
+          <p class="price" id="price">&mdash;</p>
+          <p class="price-sub" id="priceSub">Loading model&hellip;</p>
+          <p class="status" id="status">The 5.6&nbsp;MB model file is downloading. This happens once.</p>
+          <div class="result-note">
+            Trained on Indian listings, so prices are in rupees and reflect that
+            market. The model explains about 91&nbsp;% of price variation; typical
+            error is around &#8377;1.1&nbsp;lakh, and it is least reliable on
+            very expensive cars, where listings are sparse.
+          </div>
+        </aside>
+      </div>
+
+      <div class="section-footer-link" style="margin-top: 34px;">
+        <a class="btn btn-ghost" href="https://github.com/sufyan1105/Used-Car-Price-Prediction" target="_blank" rel="noopener">View the notebook on GitHub &rarr;</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>&copy; <span id="year">2026</span> Sufyan Arshad Kadiwala.</p>
+    <p class="footer-legal">
+      <a href="../../impressum.html">Impressum</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="../../datenschutz.html">Datenschutzerkl&auml;rung</a>
+    </p>
+  </div>
+</footer>
+
+<script src="predict.js"></script>
+<!-- 5.6 MB m2cgen export; deferred so the form paints and is usable first -->
+<script src="model.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>

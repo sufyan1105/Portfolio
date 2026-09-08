@@ -58,6 +58,7 @@ const projects = [
     },
     tags: ["Python", "Scikit-learn", "Random Forest", "Feature Engineering"],
     code: "https://github.com/sufyan1105/Used-Car-Price-Prediction",
+    live: "projects/used-car-price/",
     featured: true,
   },
   {
@@ -503,7 +504,8 @@ function projectCardHTML(p) {
         ${p.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
       </div>
       <div class="project-links">
-        <a class="primary" href="${p.code}" target="_blank" rel="noopener">${t("projects.code")}</a>
+        ${p.live ? `<a class="primary" href="${p.live}">${t("projects.live")}</a>` : ""}
+        <a class="${p.live ? "" : "primary"}" href="${p.code}" target="_blank" rel="noopener">${t("projects.code")}</a>
         ${p.demo ? `<a href="${p.demo}" target="_blank" rel="noopener">${t(p.demoKey)}</a>` : ""}
       </div>
     </article>

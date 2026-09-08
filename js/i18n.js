@@ -121,6 +121,7 @@ const I18N = {
     "projects.title": "Things I've Built",
     "projects.intro": "A mix of machine learning projects and small web apps. Click a card to view the code — some link to a runnable notebook too.",
     "projects.code": "View Code",
+    "projects.live": "Open live demo",
     "projects.colab": "Open in Colab",
 
     // Contact page
@@ -304,6 +305,7 @@ const I18N = {
     "projects.title": "Meine Projekte",
     "projects.intro": "Eine Mischung aus Machine-Learning-Projekten und kleinen Web-Apps. Über die Karten gelangen Sie zum Quellcode — bei einigen auch zu einem ausführbaren Notebook.",
     "projects.code": "Code ansehen",
+    "projects.live": "Live-Demo öffnen",
     "projects.colab": "In Colab öffnen",
 
     "contact.eyebrow": "Kontakt",
