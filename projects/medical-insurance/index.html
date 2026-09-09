@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title data-i18n="car.title">Used Car Price Estimator</title>
-<meta name="description" data-i18n-content="car.intro" content="A Random Forest trained on 15,411 CarDekho listings, running entirely in your browser." />
-<link rel="canonical" href="https://sufyankadiwala.de/projects/used-car-price/" />
+<title data-i18n="med.title">Medical Insurance Cost Estimator</title>
+<meta name="description" data-i18n-content="med.intro" content="A Random Forest trained on 1,338 US insurance records, running entirely in your browser." />
+<link rel="canonical" href="https://sufyankadiwala.de/projects/medical-insurance/" />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Used Car Price Estimator — Sufyan Arshad Kadiwala" />
-<meta property="og:description" content="A Random Forest trained on 15,411 CarDekho listings, running entirely in your browser — no server." />
-<meta property="og:url" content="https://sufyankadiwala.de/projects/used-car-price/" />
+<meta property="og:title" content="Medical Insurance Cost Estimator — Sufyan Arshad Kadiwala" />
+<meta property="og:description" content="A Random Forest trained on 1,338 US insurance records, running entirely in your browser — no server." />
+<meta property="og:url" content="https://sufyankadiwala.de/projects/medical-insurance/" />
 <meta property="og:image" content="https://sufyankadiwala.de/assets/og-image.png" />
 <meta name="theme-color" content="#0e7c86" />
 
@@ -62,8 +62,8 @@
     <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="container hero-anim demo-wrap">
       <p class="section-eyebrow" data-i18n="demo.eyebrow">Live demo</p>
-      <h1 class="section-title" data-i18n="car.title">Used Car Price Estimator</h1>
-      <p class="section-intro" data-i18n="car.intro">A Random Forest trained on 15,411 CarDekho listings.</p>
+      <h1 class="section-title" data-i18n="med.title">Medical Insurance Cost Estimator</h1>
+      <p class="section-intro" data-i18n="med.intro">A Random Forest trained on 1,338 US insurance records.</p>
     </div>
   </section>
 
@@ -71,81 +71,71 @@
     <div class="container demo-wrap">
 
       <div class="metrics">
-        <span class="metric">R&sup2; <b>0.909</b></span>
-        <span class="metric">MAE <b>&#8377;1.13 lakh</b></span>
-        <span class="metric"><b>40</b> <span data-i18n="demo.trees">trees</span></span>
-        <span class="metric"><b>44</b> <span data-i18n="demo.features">features</span></span>
-        <span class="metric"><b>15,411</b> <span data-i18n="car.listings">listings</span></span>
+        <span class="metric">R&sup2; <b>0.876</b></span>
+        <span class="metric">MAE <b>$2,519</b></span>
+        <span class="metric">BMI&times;smoker <b>84&nbsp;%</b></span>
+        <span class="metric"><b>100</b> <span data-i18n="demo.trees">trees</span></span>
+        <span class="metric"><b>1,338</b> <span data-i18n="med.records">records</span></span>
       </div>
 
       <div class="demo-grid">
-        <form id="carForm" novalidate>
-          <div class="field">
-            <label for="brand" data-i18n="car.f.brand">Brand</label>
-            <select id="brand" name="brand"></select>
-          </div>
-
+        <form id="medForm" novalidate>
           <div class="field-row">
             <div class="field">
-              <label for="vehicle_age"><span data-i18n="car.f.age">Vehicle age</span> <span class="hint" data-i18n="car.f.age.hint">(years)</span></label>
-              <input type="number" id="vehicle_age" min="0" max="29" step="1" value="6" />
+              <label for="age"><span data-i18n="med.f.age">Age</span> <span class="hint" data-i18n="med.f.age.hint">(years)</span></label>
+              <input type="number" id="age" min="18" max="64" step="1" value="39" />
             </div>
             <div class="field">
-              <label for="km_driven" data-i18n="car.f.km">Kilometres driven</label>
-              <input type="number" id="km_driven" min="100" max="3800000" step="1000" value="50000" />
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="fuel_type" data-i18n="car.f.fuel">Fuel type</label>
-              <select id="fuel_type"></select>
-            </div>
-            <div class="field">
-              <label for="transmission_type" data-i18n="car.f.transmission">Transmission</label>
-              <select id="transmission_type"></select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="seller_type" data-i18n="car.f.seller">Seller type</label>
-            <select id="seller_type"></select>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="mileage"><span data-i18n="car.f.mileage">Mileage</span> <span class="hint" data-i18n="car.f.mileage.hint">(kmpl)</span></label>
-              <input type="number" id="mileage" min="4" max="33.5" step="0.1" value="19.7" />
-            </div>
-            <div class="field">
-              <label for="engine"><span data-i18n="car.f.engine">Engine</span> <span class="hint" data-i18n="car.f.engine.hint">(CC)</span></label>
-              <input type="number" id="engine" min="793" max="6592" step="1" value="1248" />
+              <label for="sex" data-i18n="med.f.sex">Sex</label>
+              <select id="sex">
+                <option value="male" data-i18n="med.sex.male">Male</option>
+                <option value="female" data-i18n="med.sex.female">Female</option>
+              </select>
             </div>
           </div>
 
           <div class="field-row">
             <div class="field">
-              <label for="max_power"><span data-i18n="car.f.power">Max power</span> <span class="hint" data-i18n="car.f.power.hint">(bhp)</span></label>
-              <input type="number" id="max_power" min="38.4" max="626" step="0.1" value="88.5" />
+              <label for="bmi"><span data-i18n="med.f.bmi">BMI</span> <span class="hint" data-i18n="med.f.bmi.hint">(body mass index)</span></label>
+              <input type="number" id="bmi" min="15" max="54" step="0.1" value="30.4" />
             </div>
             <div class="field">
-              <label for="seats" data-i18n="car.f.seats">Seats</label>
-              <input type="number" id="seats" min="2" max="9" step="1" value="5" />
+              <label for="children"><span data-i18n="med.f.children">Dependants</span> <span class="hint" data-i18n="med.f.children.hint">(children covered)</span></label>
+              <input type="number" id="children" min="0" max="5" step="1" value="1" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="smoker" data-i18n="med.f.smoker">Smoker</label>
+              <select id="smoker">
+                <option value="no" data-i18n="med.smoker.no">No</option>
+                <option value="yes" data-i18n="med.smoker.yes">Yes</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="region" data-i18n="med.f.region">Region</label>
+              <select id="region">
+                <option value="northeast" data-i18n="med.region.northeast">Northeast</option>
+                <option value="northwest" data-i18n="med.region.northwest">Northwest</option>
+                <option value="southeast" data-i18n="med.region.southeast">Southeast</option>
+                <option value="southwest" data-i18n="med.region.southwest">Southwest</option>
+              </select>
             </div>
           </div>
         </form>
 
         <aside class="result">
-          <p class="label" data-i18n="car.result">Estimated selling price</p>
+          <p class="label" data-i18n="med.result">Estimated annual charges</p>
           <p class="price" id="price">&mdash;</p>
           <p class="price-sub" id="priceSub" data-i18n="demo.loading">Loading model&hellip;</p>
           <p class="status" id="status" data-i18n="demo.loadingNote">The model file is downloading.</p>
-          <div class="result-note" data-i18n="car.note">Trained on Indian listings.</div>
+          <div class="result-note" data-i18n="med.note">One engineered feature dominates.</div>
         </aside>
       </div>
 
       <div class="section-footer-link" style="margin-top: 34px;">
-        <a class="btn btn-ghost" href="https://github.com/sufyan1105/Used-Car-Price-Prediction" target="_blank" rel="noopener" data-i18n="demo.notebook">View the notebook on GitHub &rarr;</a>
+        <a class="btn btn-ghost" href="https://github.com/sufyan1105/Medical-Insurance-Cost-Prediction" target="_blank" rel="noopener" data-i18n="demo.notebook">View the notebook on GitHub &rarr;</a>
       </div>
     </div>
   </section>
@@ -165,7 +155,6 @@
 <script src="../../js/i18n.js?v=6d623af9"></script>
 <script src="../../js/script.js?v=e1cedf79"></script>
 <script src="predict.js"></script>
-<!-- 5.6 MB m2cgen export; deferred so the form paints and is usable first -->
 <script src="model.js" defer></script>
 <script src="app.js" defer></script>
 </body>

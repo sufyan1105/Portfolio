@@ -73,6 +73,7 @@ const projects = [
     },
     tags: ["Python", "Scikit-learn", "Regression", "Feature Engineering"],
     code: "https://github.com/sufyan1105/Medical-Insurance-Cost-Prediction",
+    live: "projects/medical-insurance/",
     featured: true,
   },
   {
@@ -468,6 +469,10 @@ function applyLang(lang) {
   });
 
   safeSet("lang", lang);
+
+  // demo subpages render their own dynamic text (prices, status lines) and
+  // need to redraw it after a language switch
+  document.dispatchEvent(new CustomEvent("langchange", { detail: { lang: lang } }));
 }
 
 function initLang() {

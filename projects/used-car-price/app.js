@@ -7,13 +7,13 @@
   var subEl = document.getElementById("priceSub");
   var statusEl = document.getElementById("status");
 
-  // ---- theme toggle, sharing the site's localStorage key ----
-  document.getElementById("themeToggle").addEventListener("click", function () {
-    var root = document.documentElement;
-    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    try { localStorage.setItem("theme", next); } catch (e) {}
-  });
+  // theme + language toggles are handled by the shared js/script.js
+  function tr(key) {
+    var dict = I18N[document.documentElement.getAttribute("data-lang")] || I18N.en;
+    var v = dict[key] || I18N.en[key] || "";
+    var tmp = document.createElement("div"); tmp.innerHTML = v;
+    return tmp.textContent;
+  }
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -36,9 +36,11 @@
   });
 
   // ---- formatting ----
-  var inr = new Intl.NumberFormat("en-IN", {
-    style: "currency", currency: "INR", maximumFractionDigits: 0,
-  });
+  function inr() {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency", currency: "INR", maximumFractionDigits: 0,
+    });
+  }
 
   // Indian listings are read in lakh/crore, so show that alongside the figure.
   function inWords(v) {
@@ -68,27 +70,28 @@
     if (missing.length) {
       priceEl.textContent = "—";
       subEl.textContent = "";
-      statusEl.textContent = "Enter a value for: " + missing.join(", ");
+      statusEl.textContent = tr("demo.missing") + " " + missing.join(", ");
       statusEl.className = "status error";
       return;
     }
 
     try {
       var price = predictPrice(data);
-      priceEl.textContent = inr.format(Math.round(price));
+      priceEl.textContent = inr().format(Math.round(price));
       subEl.textContent = inWords(price);
-      statusEl.textContent = "Updates as you type · computed in your browser";
+      statusEl.textContent = tr("demo.local");
       statusEl.className = "status";
     } catch (err) {
       priceEl.textContent = "—";
       subEl.textContent = "";
-      statusEl.textContent = "Could not compute a price: " + err.message;
+      statusEl.textContent = err.message;
       statusEl.className = "status error";
     }
   }
 
   form.addEventListener("input", update);
   form.addEventListener("change", update);
+  document.addEventListener("langchange", update);
 
   // model.js is deferred, so wait for it before the first prediction
   function ready() {
@@ -97,7 +100,7 @@
       update();
     } else {
       priceEl.textContent = "—";
-      statusEl.textContent = "Model failed to load. Try reloading the page.";
+      statusEl.textContent = tr("demo.failed");
       statusEl.className = "status error";
     }
   }

@@ -542,3 +542,26 @@ for page, (fname, body, title, desc) in PAGES.items():
     with open(os.path.join(root, fname), "w") as fh:
         fh.write(html)
     print("wrote", fname)
+
+
+# The demo subpages under projects/ are hand-written, not generated from
+# SHELL, but they load the same css/js. Stamp the current content hashes onto
+# their <script>/<link> tags so they never serve a stale cached copy.
+def stamp_demo_pages():
+    import glob, re as _re
+    versions = {"css/style.css": V["v_css"],
+                "js/i18n.js": V["v_i18n"],
+                "js/script.js": V["v_script"]}
+    for path in glob.glob(os.path.join(root, "projects", "*", "index.html")):
+        html = open(path).read()
+        before = html
+        for asset, ver in versions.items():
+            html = _re.sub(
+                r'(\.\./\.\./' + _re.escape(asset) + r')(\?v=[a-f0-9]+)?',
+                r'\1?v=' + ver, html)
+        if html != before:
+            open(path, "w").write(html)
+            print("stamped", os.path.relpath(path, root))
+
+
+stamp_demo_pages()
