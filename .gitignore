@@ -17,3 +17,4 @@ assets/sufyan image.png
 # notebook source repo (has its own .git; would become a broken gitlink)
 /Used Car Price Prediction/
 /Medical Insurance cost Prediction/
+/House Price Prediction/

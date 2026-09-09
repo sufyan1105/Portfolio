@@ -45,6 +45,7 @@ const projects = [
     },
     tags: ["Python", "Scikit-learn", "Random Forest", "Flask", "Cross-Validation"],
     code: "https://github.com/sufyan1105/House-Price-Prediction",
+    live: "projects/house-price/",
   },
   {
     icon: "🚗",
