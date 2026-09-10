@@ -1,0 +1,91 @@
+/* Small helpers on top of Tailwind's CDN build. */
+
+html { -webkit-text-size-adjust: 100%; }
+body { overscroll-behavior-y: none; }
+
+/* ---- form controls ---- */
+.label {
+  display: block;
+  margin-bottom: .375rem;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #94a3b8;
+}
+.input {
+  width: 100%;
+  border-radius: .75rem;
+  border: 1px solid #1e293b;
+  background: #0f172a;
+  padding: .75rem 1rem;
+  font-size: 1rem;         /* 16px keeps iOS from zooming on focus */
+  color: #f1f5f9;
+  outline: none;
+}
+.input:focus { border-color: #0ea5e9; }
+.input::placeholder { color: #475569; }
+
+/* ---- bottom nav ---- */
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .125rem;
+  padding: .25rem 0;
+  font-size: .625rem;
+  color: #64748b;
+  transition: color .15s;
+}
+.tab > span:first-child { font-size: 1.25rem; line-height: 1.2; }
+.tab.active { color: #38bdf8; }
+
+/* ---- flashcard flip ---- */
+.card { perspective: 1200px; }
+.card-inner {
+  position: relative;
+  width: 100%;
+  min-height: 19rem;
+  transition: transform .5s cubic-bezier(.4, .2, .2, 1);
+  transform-style: preserve-3d;
+}
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card-back { transform: rotateY(180deg); }
+
+/* ---- gender colours: der = blue, die = red, das = green ---- */
+.g-der { color: #60a5fa; }
+.g-die { color: #fb7185; }
+.g-das { color: #34d399; }
+.chip-der { background: rgba(37, 99, 235, .18); color: #93c5fd; }
+.chip-die { background: rgba(225, 29, 72, .18);  color: #fda4af; }
+.chip-das { background: rgba(5, 150, 105, .18);  color: #6ee7b7; }
+
+/* ---- quiz answer feedback ---- */
+.gender-btn.wrong { animation: shake .35s; }
+.gender-btn.correct { animation: pop .35s; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-6px); }
+  75%     { transform: translateX(6px); }
+}
+@keyframes pop {
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.08); }
+}
+
+.swipe-out-left  { animation: outLeft  .25s forwards; }
+.swipe-out-right { animation: outRight .25s forwards; }
+@keyframes outLeft  { to { transform: translateX(-120%) rotate(-8deg); opacity: 0; } }
+@keyframes outRight { to { transform: translateX( 120%) rotate( 8deg); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-inner, .gender-btn, .swipe-out-left, .swipe-out-right {
+    transition: none !important;
+    animation: none !important;
+  }
+}

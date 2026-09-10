@@ -1,0 +1,5 @@
+# The vocabulary trainer is unlisted: nothing on the site links to it and it
+# is not meant to appear in search results. The page carries a noindex meta
+# tag too; this header covers the JSON and JS beside it.
+/german/*
+  X-Robots-Tag: noindex, nofollow

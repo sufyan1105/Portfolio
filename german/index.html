@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<!-- Name shown under the home-screen icon; without it iOS uses the long <title>. -->
+<meta name="apple-mobile-web-app-title" content="Vokabeln">
+<!-- The header already pads for env(safe-area-inset-top), so the page can run
+     under a translucent status bar. -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- iOS ignores the SVG favicon for the home screen and screenshots the page
+     instead unless a real apple-touch-icon is offered. -->
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="robots" content="noindex, nofollow">
+<title>Deutsch Vokabeln</title>
+<link rel="stylesheet" href="tailwind.css?v=7ee470dd">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%87%A9%F0%9F%87%AA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css?v=aebd68b5">
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased">
+
+<div id="app" class="mx-auto flex min-h-[100dvh] w-full max-w-lg flex-col">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-20 border-b border-slate-800 bg-slate-950 px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] backdrop-blur">
+    <div class="flex items-center justify-between">
+      <h1 class="text-lg font-bold tracking-tight">Deutsch<span class="text-sky-400">Vokabeln</span></h1>
+      <span id="dueBadge" class="rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold text-slate-300">–</span>
+    </div>
+    <div id="levelBar" class="mt-2.5 flex items-center gap-1.5 overflow-x-auto pb-0.5"></div>
+  </header>
+
+  <main class="flex-1 px-4 pb-28 pt-4">
+
+    <!-- ============ REVISE ============ -->
+    <section id="view-revise" class="view">
+      <div id="reviseEmpty" class="hidden pt-16 text-center">
+        <div class="text-5xl">🎉</div>
+        <p class="mt-4 text-lg font-semibold">All caught up</p>
+        <p class="mt-1 text-sm text-slate-400">Everything due today is done. Come back tomorrow, or widen the level filter.</p>
+        <button data-goto="add" class="mt-6 rounded-xl bg-sky-500 px-5 py-3 font-semibold text-white active:scale-95">Add a word</button>
+      </div>
+
+      <div id="reviseDeck" class="hidden">
+        <div class="mb-3 flex items-center justify-between text-xs text-slate-400">
+          <span id="reviseProgress">–</span>
+          <button id="btnSkip" class="rounded-lg px-2 py-1 active:bg-slate-800">Skip →</button>
+        </div>
+
+        <div id="flashcard" class="card relative min-h-[19rem] w-full cursor-pointer select-none rounded-3xl">
+          <div class="card-inner">
+            <!-- front -->
+            <div class="card-face flex flex-col items-center justify-center rounded-3xl border border-slate-800 bg-slate-900 p-6 text-center">
+              <p class="text-xs uppercase tracking-widest text-slate-500">What does this mean?</p>
+              <p id="cardFront" class="mt-4 text-3xl font-bold leading-tight"></p>
+              <p class="mt-3 flex items-center gap-2 text-xs uppercase tracking-wider text-slate-500">
+                <span id="cardPos"></span>
+                <span id="cardLevel" class="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-bold tracking-normal"></span>
+                <span id="cardRelearn" class="hidden rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-bold tracking-normal text-amber-300">relearning</span>
+              </p>
+              <p class="absolute bottom-5 text-xs text-slate-600">tap to flip</p>
+            </div>
+            <!-- back -->
+            <div class="card-face card-back flex flex-col justify-center rounded-3xl border border-slate-800 bg-slate-900 p-6">
+              <p id="cardArticle" class="text-center text-2xl font-bold"></p>
+              <p id="cardBack" class="mt-2 text-center text-2xl font-semibold"></p>
+              <p id="cardPlural" class="mt-3 text-center text-sm text-slate-400"></p>
+              <div class="mt-5 border-t border-slate-800 pt-4 text-center">
+                <p id="cardExample" class="text-sm italic leading-relaxed text-slate-300"></p>
+                <p id="cardExampleEn" class="mt-1.5 text-sm leading-relaxed text-slate-500"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ratingRow" class="mt-5 grid grid-cols-4 gap-2 opacity-30 transition-opacity duration-200">
+          <button data-rate="0" class="rate rounded-xl bg-rose-600/90 py-3 text-sm font-semibold active:scale-95">Again</button>
+          <button data-rate="1" class="rate rounded-xl bg-amber-600/90 py-3 text-sm font-semibold active:scale-95">Hard</button>
+          <button data-rate="2" class="rate rounded-xl bg-sky-600/90 py-3 text-sm font-semibold active:scale-95">Good</button>
+          <button data-rate="3" class="rate rounded-xl bg-emerald-600/90 py-3 text-sm font-semibold active:scale-95">Easy</button>
+        </div>
+        <p class="mt-2 text-center text-[11px] text-slate-600">Flip the card, then rate how well you knew it.</p>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section id="view-quiz" class="view hidden">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-base font-semibold">Gender Trainer</h2>
+        <span id="quizScore" class="text-sm text-slate-400">0 / 0</span>
+      </div>
+      <div id="quizEmpty" class="hidden pt-16 text-center text-sm text-slate-400">No nouns with a gender yet — add some first.</div>
+      <div id="quizBox" class="hidden">
+        <div class="rounded-3xl border border-slate-800 bg-slate-900 p-8 text-center">
+          <p class="text-xs uppercase tracking-widest text-slate-500">Which article?</p>
+          <p id="quizWord" class="mt-4 text-3xl font-bold"></p>
+          <p id="quizMeaning" class="mt-2 text-sm text-slate-400"></p>
+        </div>
+        <div class="mt-5 grid grid-cols-3 gap-3">
+          <button data-gender="der" class="gender-btn rounded-2xl bg-blue-600 py-5 text-xl font-bold active:scale-95">der</button>
+          <button data-gender="die" class="gender-btn rounded-2xl bg-rose-600 py-5 text-xl font-bold active:scale-95">die</button>
+          <button data-gender="das" class="gender-btn rounded-2xl bg-emerald-600 py-5 text-xl font-bold active:scale-95">das</button>
+        </div>
+        <p id="quizFeedback" class="mt-5 min-h-[3rem] text-center text-sm"></p>
+      </div>
+      <button id="btnQuizRestart" class="mt-4 hidden w-full rounded-xl bg-slate-800 py-3 font-semibold active:scale-95">New round</button>
+    </section>
+
+    <!-- ============ WORDS ============ -->
+    <section id="view-words" class="view hidden">
+      <input id="searchInput" type="search" placeholder="Search word or meaning…"
+             class="w-full rounded-xl border border-slate-800 bg-slate-900 px-4 py-3 text-base outline-none placeholder:text-slate-600 focus:border-sky-500">
+      <div id="wordList" class="mt-4 space-y-2"></div>
+    </section>
+
+    <!-- ============ ADD ============ -->
+    <section id="view-add" class="view hidden">
+      <h2 class="mb-4 text-base font-semibold">Add a word</h2>
+      <form id="addForm" class="space-y-4">
+        <div>
+          <label class="label">German word</label>
+          <input name="word" required placeholder="das Fenster" class="input">
+        </div>
+        <div>
+          <label class="label">English meaning</label>
+          <input name="meaning" required placeholder="window" class="input">
+        </div>
+        <div>
+          <label class="label">Part of speech</label>
+          <select name="part_of_speech" class="input">
+            <option value="noun">Noun</option>
+            <option value="verb">Verb</option>
+            <option value="adjective">Adjective</option>
+            <option value="adverb">Adverb</option>
+            <option value="phrase">Phrase / other</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">Level</label>
+          <select name="level" class="input">
+            <option value="">— none —</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B1">B1</option>
+            <option value="B2">B2</option>
+          </select>
+        </div>
+        <div id="nounFields" class="space-y-4">
+          <div>
+            <label class="label">Gender</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" data-pick="der" class="pick rounded-xl border border-blue-500/40 bg-blue-500/10 py-3 font-bold text-blue-300">der</button>
+              <button type="button" data-pick="die" class="pick rounded-xl border border-rose-500/40 bg-rose-500/10 py-3 font-bold text-rose-300">die</button>
+              <button type="button" data-pick="das" class="pick rounded-xl border border-emerald-500/40 bg-emerald-500/10 py-3 font-bold text-emerald-300">das</button>
+            </div>
+            <input type="hidden" name="gender">
+          </div>
+          <div>
+            <label class="label">Plural form</label>
+            <input name="plural" placeholder="die Fenster" class="input">
+          </div>
+        </div>
+        <div>
+          <label class="label">Example sentence</label>
+          <textarea name="example" rows="2" placeholder="Bitte mach das Fenster zu." class="input resize-none"></textarea>
+        </div>
+        <div>
+          <label class="label">Example in English</label>
+          <textarea name="example_en" rows="2" placeholder="Please close the window." class="input resize-none"></textarea>
+        </div>
+        <button type="submit" class="w-full rounded-xl bg-sky-500 py-4 font-bold text-white active:scale-95">Save word</button>
+        <p id="addMsg" class="min-h-[1.25rem] text-center text-sm"></p>
+      </form>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section id="view-stats" class="view hidden">
+      <h2 class="mb-4 text-base font-semibold">Overview</h2>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+          <p class="text-3xl font-bold" id="stTotal">–</p>
+          <p class="mt-1 text-xs text-slate-400">Total words</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+          <p class="text-3xl font-bold text-sky-400" id="stDue">–</p>
+          <p class="mt-1 text-xs text-slate-400">Due today</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+          <p class="text-3xl font-bold text-emerald-400" id="stLearned">–</p>
+          <p class="mt-1 text-xs text-slate-400">Started learning</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+          <p class="text-3xl font-bold" id="stReviews">–</p>
+          <p class="mt-1 text-xs text-slate-400">Reviews done</p>
+        </div>
+        <div class="hidden col-span-2 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4">
+          <p class="text-3xl font-bold text-amber-300" id="stRelearn">–</p>
+          <p class="mt-1 text-xs text-amber-200/70">Relearning — rated <em>Again</em>, and coming back until you rate them <em>Easy</em></p>
+        </div>
+      </div>
+
+      <h3 class="mb-3 mt-6 text-sm font-semibold text-slate-300">Mastery breakdown</h3>
+      <div id="masteryBars" class="space-y-3"></div>
+
+      <h3 class="mb-3 mt-6 text-sm font-semibold text-slate-300">Progress by level</h3>
+      <div id="levelBars" class="space-y-3"></div>
+
+      <h3 class="mb-3 mt-6 text-sm font-semibold text-slate-300">Nouns by gender</h3>
+      <div id="genderBars" class="flex gap-2"></div>
+
+      <h3 class="mb-3 mt-6 text-sm font-semibold text-slate-300">Backup</h3>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+        <p class="text-xs leading-relaxed text-slate-400">
+          Your review history lives in this browser only. Export it to move to another
+          device, or to keep a copy in case the browser clears its data.
+        </p>
+        <div class="mt-3 grid grid-cols-2 gap-2">
+          <button id="btnExport" class="rounded-xl border border-slate-700 bg-slate-800 py-3 text-sm font-semibold active:scale-95">Export</button>
+          <button id="btnImport" class="rounded-xl border border-slate-700 bg-slate-800 py-3 text-sm font-semibold active:scale-95">Import</button>
+        </div>
+        <input id="importFile" type="file" accept="application/json,.json" class="hidden">
+        <p id="backupMsg" class="mt-2 text-center text-xs"></p>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Bottom nav -->
+  <nav class="fixed bottom-0 left-1/2 z-20 w-full max-w-lg -translate-x-1/2 border-t border-slate-800 bg-slate-950/95 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur">
+    <div class="grid grid-cols-5">
+      <button data-goto="revise" class="tab"><span>🔁</span><span>Revise</span></button>
+      <button data-goto="quiz"   class="tab"><span>🎯</span><span>Quiz</span></button>
+      <button data-goto="words"  class="tab"><span>📚</span><span>Words</span></button>
+      <button data-goto="add"    class="tab"><span>➕</span><span>Add</span></button>
+      <button data-goto="stats"  class="tab"><span>📊</span><span>Stats</span></button>
+    </div>
+  </nav>
+</div>
+
+<script src="store.js?v=92ffd3a3"></script>
+<script src="app.js?v=388dd0f5"></script>
+</body>
+</html>

@@ -18,3 +18,7 @@ assets/sufyan image.png
 /Used Car Price Prediction/
 /Medical Insurance cost Prediction/
 /House Price Prediction/
+
+# personal German trainer source: .venv, __pycache__, and a vocab.db
+# holding review history. german/ is the built static copy that ships.
+/German Language/
