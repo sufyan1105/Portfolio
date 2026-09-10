@@ -146,6 +146,208 @@ html = html.replace(
     '<script src="predict.js"></script>\n'
     "<script>\n/* ═", 1)
 
+# ------------------------------------------------- 4. English -> bilingual
+# The template is written in English throughout. Everything a visitor reads
+# gets a data-i18n key so applyLang() in js/script.js swaps it, and the strings
+# the script writes itself are re-rendered on the `langchange` event.
+# Keys live in js/i18n.js under `hp.*`.
+
+MARKUP = [
+    # (what the template says, what replaces it)
+    ("<title>Estimator — California House Price Prediction</title>",
+     '<title data-i18n="hp.title">California House Price Estimator</title>\n'
+     '<meta name="description" data-i18n-content="hp.intro"\n'
+     '      content="A Random Forest with a live map, a per-tree uncertainty band and '
+     'feature contributions - running entirely in your browser.">'),
+
+    ('<span id="ntrees">100</span> trees · <span id="nrows">20,640</span> blocks',
+     '<span id="ntrees">100</span> <span data-i18n="hp.eyebrow.trees">trees</span> '
+     '&middot; <span id="nrows">20,640</span> <span data-i18n="hp.eyebrow.blocks">blocks</span>'),
+
+    ("<h1>What is this<br>California block worth?</h1>",
+     '<h1 data-i18n="hp.h1">What is this<br>California block worth?</h1>'),
+
+    ('<p class="sub">Drop a pin', '<p class="sub" data-i18n="hp.sub">Drop a pin'),
+    ('<div class="card-title">Location</div>',
+     '<div class="card-title" data-i18n="hp.loc.title">Location</div>'),
+    ('<div class="card-note" style="margin-top:4px">Click or drag anywhere on the map</div>',
+     '<div class="card-note" style="margin-top:4px" data-i18n="hp.loc.note">Click or drag anywhere on the map</div>'),
+    ('<div class="map-hint">3,000 sampled training blocks',
+     '<div class="map-hint" data-i18n="hp.map.hint">3,000 sampled training blocks'),
+    ('<span class="field-name">Latitude</span>',
+     '<span class="field-name" data-i18n="hp.f.latitude">Latitude</span>'),
+    ('<span class="field-name">Longitude</span>',
+     '<span class="field-name" data-i18n="hp.f.longitude">Longitude</span>'),
+    ('<div class="price-label">Estimated median house value</div>',
+     '<div class="price-label" data-i18n="hp.price.label">Estimated median house value</div>'),
+    ('<div class="price-sub" id="priceSub">Set the inputs to get an estimate</div>',
+     '<div class="price-sub" id="priceSub" data-i18n="hp.price.idle">Set the inputs to get an estimate</div>'),
+    ('<span id="bandLabel">80% of trees</span>',
+     '<span id="bandLabel" data-i18n="hp.band.label">80% of trees</span>'),
+    ('<div class="stat-k">Low estimate</div>',
+     '<div class="stat-k" data-i18n="hp.stat.low">Low estimate</div>'),
+    ('<div class="stat-k">High estimate</div>',
+     '<div class="stat-k" data-i18n="hp.stat.high">High estimate</div>'),
+    ('<div class="stat-k">Statewide pct.</div>',
+     '<div class="stat-k" data-i18n="hp.stat.pct">Statewide pct.</div>'),
+    ('<div class="warn" id="warn">', '<div class="warn" id="warn" data-i18n="hp.warn">'),
+
+    ('<div class="stat-k">Reality check · 30 nearest real blocks</div>',
+     '<div class="stat-k" data-i18n="hp.truth.k">Reality check &middot; 30 nearest real blocks</div>'),
+    ('<div class="truth-note">Actual recorded median value',
+     '<div class="truth-note" data-i18n="hp.truth.note">Actual recorded median value'),
+    ('<div class="card-title" style="margin-bottom:14px">What is moving this number</div>',
+     '<div class="card-title" style="margin-bottom:14px" data-i18n="hp.contrib.title">What is moving this number</div>'),
+    ('<div class="card-note" style="margin-top:10px">Each bar:',
+     '<div class="card-note" style="margin-top:10px" data-i18n="hp.contrib.note">Each bar:'),
+    ('<div class="card-title">Neighbourhood profile</div>',
+     '<div class="card-title" data-i18n="hp.ctl.title">Neighbourhood profile</div>'),
+    ('<div class="card-note">Every change re-runs the model</div>',
+     '<div class="card-note" data-i18n="hp.ctl.note">Every change re-runs the model</div>'),
+    ('<span class="field-name">Ocean proximity</span>',
+     '<span class="field-name" data-i18n="hp.n.ocean_proximity">Ocean proximity</span>'),
+    ('<span class="field-help">The one categorical feature',
+     '<span class="field-help" data-i18n="hp.h.ocean_proximity">The one categorical feature'),
+    ('<span class="caret">▶</span> Block-level detail',
+     '<span class="caret">▶</span> <span data-i18n="hp.adv.title">Block-level detail</span>'),
+    ("<span>Auto-fill from the 30 nearest real blocks</span>",
+     '<span data-i18n="hp.adv.auto">Auto-fill from the 30 nearest real blocks</span>'),
+    ('<div class="card-note" style="margin-bottom:14px;max-width:680px">',
+     '<div class="card-note" style="margin-bottom:14px;max-width:680px" data-i18n="hp.adv.body">'),
+    ('<button data-m="totals">Block totals</button>',
+     '<button data-m="totals" data-i18n="hp.mode.totals">Block totals</button>'),
+    ('<button data-m="home">Per home</button>',
+     '<button data-m="home" data-i18n="hp.mode.home">Per home</button>'),
+    ("<div>California Housing · RandomForestRegressor",
+     '<div data-i18n="hp.footer">California Housing &middot; RandomForestRegressor'),
+]
+
+# The slider specs carry their label and help text as literals. Swapping them
+# for keys lets buildField stamp data-i18n on the spans it generates, which
+# means applyLang re-translates them for free on every switch.
+SCRIPT = [
+    ("{k:'median_income', name:'Median household income', help:'Strongest single predictor in the dataset',",
+     "{k:'median_income', key:'median_income',"),
+    ("{k:'housing_median_age', name:'Median age of homes', help:'Years since the typical home here was built',",
+     "{k:'housing_median_age', key:'housing_median_age',"),
+    ("{k:'total_rooms', name:'Total rooms in block', help:'Across every home on the block', step:10, fmt:int}",
+     "{k:'total_rooms', key:'total_rooms', step:10, fmt:int}"),
+    ("{k:'total_bedrooms', name:'Total bedrooms in block', help:'The only feature with missing values in the raw data', step:5, fmt:int}",
+     "{k:'total_bedrooms', key:'total_bedrooms', step:5, fmt:int}"),
+    ("{k:'population', name:'Block population', help:'People living in the block', step:10, fmt:int}",
+     "{k:'population', key:'population', step:10, fmt:int}"),
+    ("{k:'households', name:'Households in block', help:'Occupied dwellings', step:5, fmt:int}",
+     "{k:'households', key:'households', step:5, fmt:int}"),
+
+    ("{k:'rooms_per_home', ratio:true, name:'Rooms per home', step:0.1, fmt:v=>v.toFixed(1)+' rooms',",
+     "{k:'rooms_per_home', ratio:true, key:'rooms_per_home', step:0.1, fmt:v=>dec(v,1)+' '+t('hp.unit.rooms'),"),
+    ("{k:'bedrooms_per_home', ratio:true, name:'Bedrooms per home', step:0.05, fmt:v=>v.toFixed(2)+' beds',",
+     "{k:'bedrooms_per_home', ratio:true, key:'bedrooms_per_home', step:0.05, fmt:v=>dec(v,2)+' '+t('hp.unit.beds'),"),
+    ("{k:'people_per_home', ratio:true, name:'People per home', step:0.1, fmt:v=>v.toFixed(1)+' people',",
+     "{k:'people_per_home', ratio:true, key:'people_per_home', step:0.1, fmt:v=>dec(v,1)+' '+t('hp.unit.people'),"),
+    ("{k:'households', scale:true, name:'Homes in the block', step:5, fmt:int,",
+     "{k:'households', scale:true, key:'households_scale', step:5, fmt:int,"),
+
+    ("fmt:v=>Math.round(v)+' yrs'}", "fmt:v=>Math.round(v)+' '+t('hp.unit.yrs')}"),
+
+    # the three help: lines that survive the spec rewrites above
+    ("   help:'The closest thing to “house size” in this dataset — there is no square footage'},",
+     "   },"),
+    ("   help:'A block median from census aggregates — it sits near 1.0, not a listing’s bedroom count'},",
+     "   },"),
+    ("   help:'Household occupancy across the block'},", "   },"),
+    ("   help:'Scales the three ratios above into the block totals the model reads'}",
+     "   }"),
+
+    # Contribution-bar labels, looked up per render.
+    ("""const LABELS = {
+  location:'Where it is', median_income:'Median income', housing_median_age:'Home age',
+  total_rooms:'Total rooms', total_bedrooms:'Total bedrooms', population:'Population',
+  households:'Households', ocean_proximity:'Ocean proximity'
+};""",
+     """// Looked up through t() on every render so a language switch redraws them.
+const label = f => t('hp.l.' + f) || f;
+
+/* Numbers follow the reading language: 450,000 in English, 450.000 in German.
+   The dataset is US, so the $ stays put in both. */
+const nfLocale = () => (document.documentElement.getAttribute('data-lang') === 'de' ? 'de-DE' : 'en-US');
+/* toFixed() always prints a dot. German writes 3,1 rooms, not 3.1. */
+const dec = (v, n) => v.toLocaleString(nfLocale(), {minimumFractionDigits:n, maximumFractionDigits:n});"""),
+
+    ("const int   = v => Math.round(v).toLocaleString();",
+     "const int   = v => Math.round(v).toLocaleString(nfLocale());"),
+    ("const money0 = v => '$' + Math.round(v).toLocaleString();",
+     "const money0 = v => '$' + Math.round(v).toLocaleString(nfLocale());"),
+    ("const money = v => '$' + Math.round(v).toLocaleString('en-US');",
+     "const money = v => '$' + Math.round(v).toLocaleString(nfLocale());"),
+
+    ("<div><span class=\"field-name\">${spec.name}</span><span class=\"field-help\">${spec.help}</span></div>",
+     "<div><span class=\"field-name\" data-i18n=\"hp.n.${spec.key}\">${t('hp.n.' + spec.key)}</span>"
+     "<span class=\"field-help\" data-i18n=\"hp.h.${spec.key}\">${t('hp.h.' + spec.key)}</span></div>"),
+
+    # A data-i18n-title lets applyLang keep the tooltip in step too.
+    ("  out.title = 'Click to type an exact value';",
+     "  out.setAttribute('data-i18n-title', 'hp.edit.hint');\n"
+     "  out.title = t('hp.edit.hint');"),
+
+    ("""    d.innerHTML = `The model receives <b>${int(S.total_rooms)}</b> rooms, <b>${int(S.total_bedrooms)}</b> bedrooms
+      and <b>${int(S.population)}</b> people across <b>${int(S.households)}</b> homes.`;""",
+     """    d.innerHTML = t('hp.derived')
+      .replace('{rooms}', int(S.total_rooms)).replace('{beds}', int(S.total_bedrooms))
+      .replace('{people}', int(S.population)).replace('{homes}', int(S.households));"""),
+
+    ("""  document.getElementById('priceSub').innerHTML =
+    `<b>±${moneyK(d.std)}</b> spread across the forest · ${META.n_trees} trees voted`;""",
+     """  document.getElementById('priceSub').innerHTML =
+    `<b>±${moneyK(d.std)}</b> ${t('hp.spread')} · ${META.n_trees} ${t('hp.voted')}`;"""),
+
+    # English wants 63rd; German writes the ordinal as 63.
+    ("""  const suffix = (pct % 10 === 1 && pct !== 11) ? 'st' : (pct % 10 === 2 && pct !== 12) ? 'nd'
+               : (pct % 10 === 3 && pct !== 13) ? 'rd' : 'th';
+  document.getElementById('sPct').textContent = pct + suffix;""",
+     """  const suffix = document.documentElement.getAttribute('data-lang') === 'de' ? '.'
+               : (pct % 10 === 1 && pct !== 11) ? 'st' : (pct % 10 === 2 && pct !== 12) ? 'nd'
+               : (pct % 10 === 3 && pct !== 13) ? 'rd' : 'th';
+  document.getElementById('sPct').textContent = pct + suffix;"""),
+
+    ("""    el.textContent = (gap >= 0 ? '+' : '−') + Math.abs(gap).toFixed(1) + '% vs. estimate';""",
+     """    el.textContent = (gap >= 0 ? '+' : '−') + dec(Math.abs(gap), 1) + '% ' + t('hp.truth.delta');"""),
+
+    ("`${Math.abs(S.latitude).toFixed(2)}°N  ${Math.abs(S.longitude).toFixed(2)}°W`;",
+     "`${dec(Math.abs(S.latitude), 2)}°N  ${dec(Math.abs(S.longitude), 2)}°W`;"),
+
+    ("  document.getElementById('nrows').textContent = META.n_rows.toLocaleString();",
+     "  document.getElementById('nrows').textContent = META.n_rows.toLocaleString(nfLocale());"),
+
+    ("""    <div class="cname">${LABELS[r.feature] || r.feature}</div>""",
+     """    <div class="cname">${label(r.feature)}</div>"""),
+]
+
+for old, new in MARKUP + SCRIPT:
+    assert old in html, "i18n: not found -> " + old[:70]
+    html = html.replace(old, new)
+
+# applyLang only touches [data-i18n] nodes. Everything the script prints — the
+# spread line, the ordinal, the unit suffixes, the derived sentence — has to be
+# redrawn by hand, which is what `langchange` is for.
+LANG_HOOK = """
+/* ══════════════════════════════════════════════════════════════
+   LANGUAGE
+   Static text is handled by applyLang() via data-i18n. These are the
+   strings this script prints itself, so they need redrawing by hand.
+   ══════════════════════════════════════════════════════════════ */
+document.addEventListener('langchange', () => {
+  if (!META) return;
+  document.getElementById('nrows').textContent = META.n_rows.toLocaleString(nfLocale());
+  drawPin();     // the coordinate readout uses localised decimals
+  renderAll();   // slider readouts carry unit words and localised digits
+  predict();     // spread line, ordinal, contribution labels, delta
+});
+"""
+before = html
+html = html.replace("\n</script>\n<footer", LANG_HOOK + "</script>\n<footer", 1)
+assert html != before, "langchange hook not inserted — script/footer boundary moved"
+
 os.makedirs(os.path.dirname(DST), exist_ok=True)
 open(DST, "w").write(html)
 print("wrote", DST, "(%.0f KB)" % (len(html) / 1024))
@@ -154,3 +356,4 @@ for probe, label in [("HP.load", "meta -> HP.load"),
                      ("HP.autofill(", "autofill -> local"),
                      ("fetch('/api", "LEFTOVER server call")]:
     print("  %-26s %s" % (label, "yes" if probe in html else "no"))
+print("  %-26s %d" % ("data-i18n bindings", html.count("data-i18n")))

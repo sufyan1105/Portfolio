@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Estimator — California House Price Prediction</title>
+<title data-i18n="hp.title">California House Price Estimator</title>
+<meta name="description" data-i18n-content="hp.intro"
+      content="A Random Forest with a live map, a per-tree uncertainty band and feature contributions - running entirely in your browser.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b0b16'/%3E%3Cpath d='M6 15 16 7l10 8v10a1 1 0 0 1-1 1h-6v-7h-6v7H7a1 1 0 0 1-1-1z' fill='%235eead4'/%3E%3C/svg%3E">
 <style>
 /* ═══════════════════════════════════════════════════════════════
@@ -403,9 +405,9 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
 <div class="wrap">
 
   <header>
-    <div class="eyebrow"><span class="pulse"></span> Random Forest · <span id="ntrees">100</span> trees · <span id="nrows">20,640</span> blocks</div>
-    <h1>What is this<br>California block worth?</h1>
-    <p class="sub">Drop a pin, set the neighbourhood profile, and the trained model re-estimates the median house value live — with a real uncertainty band drawn from every tree in the forest.</p>
+    <div class="eyebrow"><span class="pulse"></span> Random Forest · <span id="ntrees">100</span> <span data-i18n="hp.eyebrow.trees">trees</span> &middot; <span id="nrows">20,640</span> <span data-i18n="hp.eyebrow.blocks">blocks</span></div>
+    <h1 data-i18n="hp.h1">What is this<br>California block worth?</h1>
+    <p class="sub" data-i18n="hp.sub">Drop a pin, set the neighbourhood profile, and the trained model re-estimates the median house value live — with a real uncertainty band drawn from every tree in the forest.</p>
   </header>
 
   <div class="grid">
@@ -414,8 +416,8 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
     <div class="card">
       <div class="card-head">
         <div>
-          <div class="card-title">Location</div>
-          <div class="card-note" style="margin-top:4px">Click or drag anywhere on the map</div>
+          <div class="card-title" data-i18n="hp.loc.title">Location</div>
+          <div class="card-note" style="margin-top:4px" data-i18n="hp.loc.note">Click or drag anywhere on the map</div>
         </div>
       </div>
 
@@ -426,7 +428,7 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
           <g id="pinLayer"></g>
         </svg>
         <div class="coord" id="coord">—</div>
-        <div class="map-hint">3,000 sampled training blocks · colour = actual median value</div>
+        <div class="map-hint" data-i18n="hp.map.hint">3,000 sampled training blocks · colour = actual median value</div>
       </div>
 
       <div class="legend">
@@ -435,10 +437,10 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
 
       <div class="latlon">
         <div class="field"><div class="field-top">
-          <span class="field-name">Latitude</span>
+          <span class="field-name" data-i18n="hp.f.latitude">Latitude</span>
           <span class="field-val" id="v_latitude"></span></div></div>
         <div class="field"><div class="field-top">
-          <span class="field-name">Longitude</span>
+          <span class="field-name" data-i18n="hp.f.longitude">Longitude</span>
           <span class="field-val" id="v_longitude"></span></div></div>
       </div>
 
@@ -447,53 +449,53 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
 
     <!-- ─────────── RESULT ─────────── -->
     <div class="card result" id="resultCard">
-      <div class="price-label">Estimated median house value</div>
+      <div class="price-label" data-i18n="hp.price.label">Estimated median house value</div>
       <div class="price" id="price">$—</div>
-      <div class="price-sub" id="priceSub">Set the inputs to get an estimate</div>
+      <div class="price-sub" id="priceSub" data-i18n="hp.price.idle">Set the inputs to get an estimate</div>
 
       <div class="band">
         <div class="band-track"><div class="band-fill" id="bandFill" style="left:40%;width:20%"></div></div>
-        <div class="band-marks"><span>$0</span><span id="bandLabel">80% of trees</span><span>$500k</span></div>
+        <div class="band-marks"><span>$0</span><span id="bandLabel" data-i18n="hp.band.label">80% of trees</span><span>$500k</span></div>
       </div>
 
       <div class="stats">
-        <div class="stat"><div class="stat-k">Low estimate</div><div class="stat-v" id="sLow">—</div></div>
-        <div class="stat"><div class="stat-k">High estimate</div><div class="stat-v" id="sHigh">—</div></div>
-        <div class="stat"><div class="stat-k">Statewide pct.</div><div class="stat-v" id="sPct">—</div></div>
+        <div class="stat"><div class="stat-k" data-i18n="hp.stat.low">Low estimate</div><div class="stat-v" id="sLow">—</div></div>
+        <div class="stat"><div class="stat-k" data-i18n="hp.stat.high">High estimate</div><div class="stat-v" id="sHigh">—</div></div>
+        <div class="stat"><div class="stat-k" data-i18n="hp.stat.pct">Statewide pct.</div><div class="stat-v" id="sPct">—</div></div>
       </div>
 
-      <div class="warn" id="warn">
+      <div class="warn" id="warn" data-i18n="hp.warn">
         <b>Heads up —</b> the training data caps <code>median_house_value</code> at $500,001, so the
         model physically cannot predict above it. Estimates near this ceiling are floors, not truths.
       </div>
 
       <div class="truth" id="truth">
         <div>
-          <div class="stat-k">Reality check · 30 nearest real blocks</div>
+          <div class="stat-k" data-i18n="hp.truth.k">Reality check &middot; 30 nearest real blocks</div>
           <div class="truth-v"><span id="tActual">—</span>
             <span class="truth-d" id="tDelta"></span></div>
         </div>
-        <div class="truth-note">Actual recorded median value around this pin, straight from <code>housing.csv</code></div>
+        <div class="truth-note" data-i18n="hp.truth.note">Actual recorded median value around this pin, straight from <code>housing.csv</code></div>
       </div>
 
       <div class="rule" style="margin:22px 0 16px"></div>
-      <div class="card-title" style="margin-bottom:14px">What is moving this number</div>
+      <div class="card-title" style="margin-bottom:14px" data-i18n="hp.contrib.title">What is moving this number</div>
       <div class="contrib" id="contrib"></div>
-      <div class="card-note" style="margin-top:10px">Each bar: change in the estimate versus a statistically average California block.</div>
+      <div class="card-note" style="margin-top:10px" data-i18n="hp.contrib.note">Each bar: change in the estimate versus a statistically average California block.</div>
     </div>
   </div>
 
   <!-- ─────────── CONTROLS ─────────── -->
   <div class="card controls">
     <div class="card-head">
-      <div class="card-title">Neighbourhood profile</div>
-      <div class="card-note">Every change re-runs the model</div>
+      <div class="card-title" data-i18n="hp.ctl.title">Neighbourhood profile</div>
+      <div class="card-note" data-i18n="hp.ctl.note">Every change re-runs the model</div>
     </div>
 
     <div class="field">
       <div class="field-top">
-        <div><span class="field-name">Ocean proximity</span>
-          <span class="field-help">The one categorical feature — one-hot encoded in the pipeline</span></div>
+        <div><span class="field-name" data-i18n="hp.n.ocean_proximity">Ocean proximity</span>
+          <span class="field-help" data-i18n="hp.h.ocean_proximity">The one categorical feature — one-hot encoded in the pipeline</span></div>
       </div>
       <div class="seg" id="seg"></div>
     </div>
@@ -504,21 +506,21 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
 
     <div class="adv" id="adv">
       <div class="adv-head">
-        <div class="adv-title" id="advToggle"><span class="caret">▶</span> Block-level detail</div>
+        <div class="adv-title" id="advToggle"><span class="caret">▶</span> <span data-i18n="hp.adv.title">Block-level detail</span></div>
         <label class="toggle" id="autoToggle">
           <span class="switch on" id="autoSwitch"></span>
-          <span>Auto-fill from the 30 nearest real blocks</span>
+          <span data-i18n="hp.adv.auto">Auto-fill from the 30 nearest real blocks</span>
         </label>
       </div>
       <div class="adv-body">
-        <div class="card-note" style="margin-bottom:14px;max-width:680px">
+        <div class="card-note" style="margin-bottom:14px;max-width:680px" data-i18n="hp.adv.body">
           These features describe an entire census block, not a single home — which is why they are
           auto-filled from real neighbours by default. Switch auto off to drive them yourself.
         </div>
 
         <div class="mode" id="mode" style="margin-bottom:6px">
-          <button data-m="totals">Block totals</button>
-          <button data-m="home">Per home</button>
+          <button data-m="totals" data-i18n="hp.mode.totals">Block totals</button>
+          <button data-m="home" data-i18n="hp.mode.home">Per home</button>
         </div>
 
         <div class="ctl-grid" id="advanced"></div>
@@ -530,12 +532,12 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
   </div>
 
   <footer>
-    <div>California Housing · RandomForestRegressor · median-imputed, standard-scaled, one-hot encoded</div>
+    <div data-i18n="hp.footer">California Housing &middot; RandomForestRegressor · median-imputed, standard-scaled, one-hot encoded</div>
     <div><a href="https://github.com/sufyan1105/House-Price-Prediction" target="_blank" rel="noopener">github.com/sufyan1105</a></div>
   </footer>
 </div>
 
-<script src="../../js/i18n.js?v=6d623af9"></script>
+<script src="../../js/i18n.js?v=2282598e"></script>
 <script src="../../js/script.js?v=477a724e"></script>
 <script src="predict.js"></script>
 <script>
@@ -570,43 +572,46 @@ const CITIES = [
   {n:'Redding', lon:-122.39, lat:40.59}
 ];
 
-const int   = v => Math.round(v).toLocaleString();
-const money0 = v => '$' + Math.round(v).toLocaleString();
+const int   = v => Math.round(v).toLocaleString(nfLocale());
+const money0 = v => '$' + Math.round(v).toLocaleString(nfLocale());
 
 // Feature sliders. `wide` = the slider spans the full dataset range rather than p05–p95.
 const PRIMARY = [
-  {k:'median_income', name:'Median household income', help:'Strongest single predictor in the dataset',
+  {k:'median_income', key:'median_income',
    step:0.05, wide:true, fmt:v=>money0(v*10000), parse:s=>num(s)/10000},
-  {k:'housing_median_age', name:'Median age of homes', help:'Years since the typical home here was built',
-   step:1, wide:true, fmt:v=>Math.round(v)+' yrs'}
+  {k:'housing_median_age', key:'housing_median_age',
+   step:1, wide:true, fmt:v=>Math.round(v)+' '+t('hp.unit.yrs')}
 ];
 
 const ADVANCED = [
-  {k:'total_rooms', name:'Total rooms in block', help:'Across every home on the block', step:10, fmt:int},
-  {k:'total_bedrooms', name:'Total bedrooms in block', help:'The only feature with missing values in the raw data', step:5, fmt:int},
-  {k:'population', name:'Block population', help:'People living in the block', step:10, fmt:int},
-  {k:'households', name:'Households in block', help:'Occupied dwellings', step:5, fmt:int}
+  {k:'total_rooms', key:'total_rooms', step:10, fmt:int},
+  {k:'total_bedrooms', key:'total_bedrooms', step:5, fmt:int},
+  {k:'population', key:'population', step:10, fmt:int},
+  {k:'households', key:'households', step:5, fmt:int}
 ];
 
 // Per-home view. These are NOT model features — they are ratios the UI converts
 // back into block totals using `households`, which is what the model actually eats.
 const RATIO_OF = {rooms_per_home:'total_rooms', bedrooms_per_home:'total_bedrooms', people_per_home:'population'};
 const PERHOME = [
-  {k:'rooms_per_home', ratio:true, name:'Rooms per home', step:0.1, fmt:v=>v.toFixed(1)+' rooms',
-   help:'The closest thing to “house size” in this dataset — there is no square footage'},
-  {k:'bedrooms_per_home', ratio:true, name:'Bedrooms per home', step:0.05, fmt:v=>v.toFixed(2)+' beds',
-   help:'A block median from census aggregates — it sits near 1.0, not a listing’s bedroom count'},
-  {k:'people_per_home', ratio:true, name:'People per home', step:0.1, fmt:v=>v.toFixed(1)+' people',
-   help:'Household occupancy across the block'},
-  {k:'households', scale:true, name:'Homes in the block', step:5, fmt:int,
-   help:'Scales the three ratios above into the block totals the model reads'}
+  {k:'rooms_per_home', ratio:true, key:'rooms_per_home', step:0.1, fmt:v=>dec(v,1)+' '+t('hp.unit.rooms'),
+   },
+  {k:'bedrooms_per_home', ratio:true, key:'bedrooms_per_home', step:0.05, fmt:v=>dec(v,2)+' '+t('hp.unit.beds'),
+   },
+  {k:'people_per_home', ratio:true, key:'people_per_home', step:0.1, fmt:v=>dec(v,1)+' '+t('hp.unit.people'),
+   },
+  {k:'households', scale:true, key:'households_scale', step:5, fmt:int,
+   }
 ];
 
-const LABELS = {
-  location:'Where it is', median_income:'Median income', housing_median_age:'Home age',
-  total_rooms:'Total rooms', total_bedrooms:'Total bedrooms', population:'Population',
-  households:'Households', ocean_proximity:'Ocean proximity'
-};
+// Looked up through t() on every render so a language switch redraws them.
+const label = f => t('hp.l.' + f) || f;
+
+/* Numbers follow the reading language: 450,000 in English, 450.000 in German.
+   The dataset is US, so the $ stays put in both. */
+const nfLocale = () => (document.documentElement.getAttribute('data-lang') === 'de' ? 'de-DE' : 'en-US');
+/* toFixed() always prints a dot. German writes 3,1 rooms, not 3.1. */
+const dec = (v, n) => v.toLocaleString(nfLocale(), {minimumFractionDigits:n, maximumFractionDigits:n});
 
 /* ══════════════════════════════════════════════════════════════
    STATE
@@ -634,7 +639,7 @@ function magma(t){
   const a = MAGMA[i], b = MAGMA[i+1];
   return `rgb(${Math.round(a[0]+(b[0]-a[0])*f)},${Math.round(a[1]+(b[1]-a[1])*f)},${Math.round(a[2]+(b[2]-a[2])*f)})`;
 }
-const money = v => '$' + Math.round(v).toLocaleString('en-US');
+const money = v => '$' + Math.round(v).toLocaleString(nfLocale());
 const moneyK = v => v >= 1000 ? '$' + (v/1000).toFixed(0) + 'k' : '$' + Math.round(v);
 
 /* ══════════════════════════════════════════════════════════════
@@ -666,7 +671,7 @@ function drawPin(){
     <circle class="pin-halo" cx="${x}" cy="${y}" r="11"/>
     <circle class="pin-core" cx="${x}" cy="${y}" r="4.5"/>`;
   document.getElementById('coord').textContent =
-    `${Math.abs(S.latitude).toFixed(2)}°N  ${Math.abs(S.longitude).toFixed(2)}°W`;
+    `${dec(Math.abs(S.latitude), 2)}°N  ${dec(Math.abs(S.longitude), 2)}°W`;
 }
 
 function pointFromEvent(e){
@@ -691,7 +696,8 @@ function num(s){
 
 /* Click a readout to type an exact value. Enter commits, Escape cancels. */
 function makeEditable(out, o){
-  out.title = 'Click to type an exact value';
+  out.setAttribute('data-i18n-title', 'hp.edit.hint');
+  out.title = t('hp.edit.hint');
   out.addEventListener('click', () => {
     if (out.dataset.editing) return;
     out.dataset.editing = '1';
@@ -758,7 +764,7 @@ function buildField(spec, host){
   el.className = 'field';
   el.innerHTML = `
     <div class="field-top">
-      <div><span class="field-name">${spec.name}</span><span class="field-help">${spec.help}</span></div>
+      <div><span class="field-name" data-i18n="hp.n.${spec.key}">${t('hp.n.' + spec.key)}</span><span class="field-help" data-i18n="hp.h.${spec.key}">${t('hp.h.' + spec.key)}</span></div>
       <span class="field-val"></span>
     </div>
     <input type="range" min="${lo}" max="${hi}" step="${spec.step}">`;
@@ -795,8 +801,9 @@ function renderAll(){
   RENDER.forEach(f => f());
   const d = document.getElementById('derived');
   if (!d.hidden){
-    d.innerHTML = `The model receives <b>${int(S.total_rooms)}</b> rooms, <b>${int(S.total_bedrooms)}</b> bedrooms
-      and <b>${int(S.population)}</b> people across <b>${int(S.households)}</b> homes.`;
+    d.innerHTML = t('hp.derived')
+      .replace('{rooms}', int(S.total_rooms)).replace('{beds}', int(S.total_bedrooms))
+      .replace('{people}', int(S.population)).replace('{homes}', int(S.households));
   }
 }
 
@@ -873,12 +880,13 @@ async function predict(){
   card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
 
   document.getElementById('priceSub').innerHTML =
-    `<b>±${moneyK(d.std)}</b> spread across the forest · ${META.n_trees} trees voted`;
+    `<b>±${moneyK(d.std)}</b> ${t('hp.spread')} · ${META.n_trees} ${t('hp.voted')}`;
 
   document.getElementById('sLow').textContent  = moneyK(d.low);
   document.getElementById('sHigh').textContent = moneyK(d.high);
   const pct = Math.round(d.percentile);
-  const suffix = (pct % 10 === 1 && pct !== 11) ? 'st' : (pct % 10 === 2 && pct !== 12) ? 'nd'
+  const suffix = document.documentElement.getAttribute('data-lang') === 'de' ? '.'
+               : (pct % 10 === 1 && pct !== 11) ? 'st' : (pct % 10 === 2 && pct !== 12) ? 'nd'
                : (pct % 10 === 3 && pct !== 13) ? 'rd' : 'th';
   document.getElementById('sPct').textContent = pct + suffix;
 
@@ -893,7 +901,7 @@ async function predict(){
     document.getElementById('tActual').textContent = money(NEIGHBOUR);
     const gap = (d.price - NEIGHBOUR) / NEIGHBOUR * 100;
     const el = document.getElementById('tDelta');
-    el.textContent = (gap >= 0 ? '+' : '−') + Math.abs(gap).toFixed(1) + '% vs. estimate';
+    el.textContent = (gap >= 0 ? '+' : '−') + dec(Math.abs(gap), 1) + '% ' + t('hp.truth.delta');
     el.className = 'truth-d ' + (Math.abs(gap) <= 15 ? 'near' : 'off');
   }
 
@@ -907,7 +915,7 @@ function renderContrib(rows){
     const pct = Math.abs(r.delta) / max * 50;
     const pos = r.delta >= 0;
     return `<div class="crow" style="animation-delay:${i*45}ms">
-      <div class="cname">${LABELS[r.feature] || r.feature}</div>
+      <div class="cname">${label(r.feature)}</div>
       <div class="cbar"><i class="${pos?'pos':'neg'}" style="left:${pos?50:50-pct}%;width:${pct}%"></i></div>
       <div class="cval ${pos?'pos':'neg'}">${pos?'+':'−'}${moneyK(Math.abs(r.delta))}</div>
     </div>`;
@@ -949,7 +957,7 @@ function onMove(){
   META = await HP.load('');   // meta.json + forest.json + blocks.json
 
   document.getElementById('ntrees').textContent = META.n_trees;
-  document.getElementById('nrows').textContent = META.n_rows.toLocaleString();
+  document.getElementById('nrows').textContent = META.n_rows.toLocaleString(nfLocale());
 
   // seed medians
   ['housing_median_age','total_rooms','total_bedrooms','population','households','median_income']
@@ -1013,6 +1021,18 @@ function onMove(){
 
   onMove();
 })();
+/* ══════════════════════════════════════════════════════════════
+   LANGUAGE
+   Static text is handled by applyLang() via data-i18n. These are the
+   strings this script prints itself, so they need redrawing by hand.
+   ══════════════════════════════════════════════════════════════ */
+document.addEventListener('langchange', () => {
+  if (!META) return;
+  document.getElementById('nrows').textContent = META.n_rows.toLocaleString(nfLocale());
+  drawPin();     // the coordinate readout uses localised decimals
+  renderAll();   // slider readouts carry unit words and localised digits
+  predict();     // spread line, ordinal, contribution labels, delta
+});
 </script>
 <footer class="site-footer">
   <div class="container footer-inner">
