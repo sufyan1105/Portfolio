@@ -26,8 +26,8 @@ const projects = [
       de: "KI-Lernassistent auf RAG-Basis",
     },
     desc: {
-      en: "A retrieval-augmented generation system for course videos — transcribes lectures into timestamped chunks, embeds them locally, and lets students ask questions that get answered with exact video timestamps as grounding context.",
-      de: "Ein RAG-System (Retrieval-Augmented Generation) für Lehrvideos: Es transkribiert Vorlesungen in Abschnitte mit Zeitstempeln, erzeugt daraus lokal Embeddings und beantwortet Fragen von Studierenden mit dem genauen Zeitstempel im Video als Beleg.",
+      en: "A five-stage pipeline turning raw course videos into a queryable assistant: video → MP3 → timestamped transcript chunks → bge-m3 embeddings → Llama 3.2. A question is embedded, matched against the vector store by cosine similarity, and the top five chunks are handed to the model, which answers with the video name and the timestamp to jump to. Every stage runs locally through Ollama, so no lecture content leaves the machine.",
+      de: "Eine fünfstufige Pipeline, die Rohvideos einer Vorlesung in einen abfragbaren Assistenten verwandelt: Video → MP3 → Transkript-Abschnitte mit Zeitstempeln → bge-m3-Embeddings → Llama 3.2. Eine Frage wird eingebettet, per Kosinus-Ähnlichkeit gegen den Vektorspeicher gematcht, und die fünf besten Abschnitte gehen an das Modell, das mit Videoname und Zeitstempel antwortet. Alle Stufen laufen lokal über Ollama, es verlässt also kein Vorlesungsinhalt den Rechner.",
     },
     tags: ["Python", "RAG", "Ollama", "Llama 3.2", "Embeddings"],
     code: "https://github.com/sufyan1105/RAG-based-AI-Teaching-Assistant",
@@ -98,39 +98,11 @@ const projects = [
       de: "Neuronales Netz auf MNIST",
     },
     desc: {
-      en: "Neural network trained on the MNIST handwritten-digit dataset, reaching 90.8 % test accuracy over five epochs, with a companion notebook for visualising the data.",
-      de: "Neuronales Netz auf dem MNIST-Datensatz handgeschriebener Ziffern, das über fünf Epochen 90,8 % Testgenauigkeit erreicht, mit einem zusätzlichen Notebook zur Visualisierung der Daten.",
+      en: "A feed-forward network built from scratch in Keras on the 70,000-image MNIST dataset — Flatten, a 128-unit ReLU layer and a 10-way softmax, trained with Adam over five epochs. A companion notebook visualises the digits and the class distribution before any model is fitted.",
+      de: "Ein von Grund auf in Keras aufgebautes Feed-Forward-Netz auf den 70.000 MNIST-Bildern — Flatten, eine ReLU-Schicht mit 128 Neuronen und ein Softmax über 10 Klassen, trainiert mit Adam über fünf Epochen. Ein zweites Notebook visualisiert die Ziffern und die Klassenverteilung, bevor überhaupt ein Modell angepasst wird.",
     },
     tags: ["Python", "TensorFlow / Keras", "Neural Networks", "Deep Learning"],
     code: "https://github.com/sufyan1105/Training-Neural-Network-on-MNIST-",
-  },
-  {
-    icon: "🍷",
-    title: {
-      en: "Wine Quality Prediction",
-      de: "Vorhersage der Weinqualität",
-    },
-    desc: {
-      en: "Predicting wine quality from physicochemical properties, comparing seven classifiers. Random Forest came out best at 89.4 % accuracy, just ahead of XGBoost (89.2 %) and well clear of Naive Bayes (83.3 %).",
-      de: "Vorhersage der Weinqualität anhand physikalisch-chemischer Eigenschaften im Vergleich von sieben Klassifikatoren. Random Forest schnitt mit 89,4 % Genauigkeit am besten ab, knapp vor XGBoost (89,2 %) und deutlich vor Naive Bayes (83,3 %).",
-    },
-    tags: ["Python", "Scikit-learn", "Classification", "XGBoost", "Random Forest"],
-    code: "https://github.com/sufyan1105/Wine-quality-prediction",
-  },
-  {
-    icon: "⛽",
-    title: {
-      en: "Mileage Prediction",
-      de: "Kraftstoffverbrauch-Vorhersage",
-    },
-    desc: {
-      en: "Regression analysis estimating vehicle fuel efficiency (mpg) through exploratory data analysis and model building.",
-      de: "Regressionsanalyse zur Schätzung der Kraftstoffeffizienz von Fahrzeugen (mpg) mittels explorativer Datenanalyse und Modellbildung.",
-    },
-    tags: ["Python", "Regression", "EDA"],
-    code: "https://github.com/sufyan1105/Mileage-prediction",
-    demo: "https://colab.research.google.com/drive/1V4GpHraG39H_eHFv6jozhESk_6a9AOUO?usp=sharing",
-    demoKey: "projects.colab",
   },
   {
     icon: "🎙️",
@@ -139,10 +111,10 @@ const projects = [
       de: "KI-Bot für Audio-Transkription",
     },
     desc: {
-      en: "A Flask web app that transcribes audio into text and translates it into multiple languages using OpenAI's Whisper API.",
-      de: "Eine Flask-Webanwendung, die Audio mit der Whisper-API von OpenAI in Text umwandelt und in mehrere Sprachen übersetzt.",
+      en: "A Flask web app for spoken audio: Whisper transcribes an uploaded recording into English, then GPT-4 renders that text into a language chosen from the form. An earlier project, and the one that led to running models locally in the RAG assistant rather than paying per API call.",
+      de: "Eine Flask-Webanwendung für gesprochene Aufnahmen: Whisper transkribiert eine hochgeladene Datei ins Englische, anschließend überträgt GPT-4 diesen Text in eine im Formular gewählte Sprache. Ein früheres Projekt — und der Anlass, im RAG-Assistenten Modelle lokal laufen zu lassen statt pro API-Aufruf zu zahlen.",
     },
-    tags: ["Python", "Flask", "OpenAI Whisper"],
+    tags: ["Python", "Flask", "OpenAI Whisper", "GPT-4"],
     code: "https://github.com/sufyan1105/Audio-to-text-Ai-bot",
     featured: true,
   },
