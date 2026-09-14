@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n="bike.title">Bike Sharing Demand Forecast</title>
+<meta name="description" data-i18n-content="bike.intro" content="A Random Forest trained on 17,379 hours of Capital Bikeshare data, predicting a full day of rentals in your browser." />
+<link rel="canonical" href="https://sufyankadiwala.de/projects/bike-sharing/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Bike Sharing Demand Forecast — Sufyan Arshad Kadiwala" />
+<meta property="og:description" content="A Random Forest trained on 17,379 hours of Capital Bikeshare data, predicting a full day of rentals in your browser — no server." />
+<meta property="og:url" content="https://sufyankadiwala.de/projects/bike-sharing/" />
+<meta property="og:image" content="https://sufyankadiwala.de/assets/og-image.png" />
+<meta name="theme-color" content="#0e7c86" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230e7c86'/%3E%3Ctext x='50' y='68' font-size='55' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E" />
+
+<link rel="stylesheet" href="../../css/style.css?v=40534a83" />
+<link rel="stylesheet" href="../demo.css" />
+
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add("js");
+  var theme = "light", lang = "en";
+  try {
+    theme = localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    lang = localStorage.getItem("lang") ||
+      ((navigator.language || "en").slice(0, 2).toLowerCase() === "de" ? "de" : "en");
+  } catch (e) {}
+  d.setAttribute("data-theme", theme);
+  d.setAttribute("data-lang", lang);
+  d.setAttribute("lang", lang);
+})();
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="../../index.html" class="logo">Sufyan<span>.</span></a>
+    <div class="nav-actions">
+      <a class="backlink" href="../../projects.html">&larr; <span data-i18n="demo.back">All projects</span></a>
+      <div class="lang-switch" role="group" aria-label="Change language" data-i18n-aria="nav.lang">
+        <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-btn="de" aria-pressed="false">DE</button>
+      </div>
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" data-i18n-aria="nav.theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section page-hero">
+    <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="container hero-anim demo-wrap">
+      <p class="section-eyebrow" data-i18n="demo.eyebrow">Live demo</p>
+      <h1 class="section-title" data-i18n="bike.title">Bike Sharing Demand Forecast</h1>
+      <p class="section-intro" data-i18n="bike.intro">A Random Forest trained on 17,379 hours of Capital Bikeshare data.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 28px;">
+    <div class="container demo-wrap">
+
+      <div class="metrics">
+        <span class="metric">R&sup2; <b>0.875</b></span>
+        <span class="metric">RMSE <b>78</b> <span data-i18n="bike.rides">rides</span></span>
+        <span class="metric">MAE <b>51</b> <span data-i18n="bike.rides">rides</span></span>
+        <span class="metric"><b>40</b> <span data-i18n="demo.trees">trees</span></span>
+        <span class="metric"><b>20</b> <span data-i18n="demo.features">features</span></span>
+        <span class="metric"><b>17,379</b> <span data-i18n="bike.actual.n">hours in the data</span></span>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <h2><span data-i18n="bike.curve">Predicted rentals across the day</span><span class="day-badge" id="dayBadge"></span></h2>
+          <div class="legend">
+            <span><i></i> <span data-i18n="bike.legend.pred">Predicted</span></span>
+            <span><i class="dashed"></i> <span data-i18n="bike.legend.actual">Actually recorded</span></span>
+          </div>
+        </div>
+        <svg class="chart" id="chart" viewBox="0 0 720 280" role="img" aria-labelledby="chartTitle">
+          <title id="chartTitle" data-i18n="bike.curve">Predicted rentals across the day</title>
+        </svg>
+        <p class="status" id="status" style="margin-top:10px" data-i18n="demo.loadingNote">The model file is downloading. This happens once.</p>
+      </div>
+
+      <div class="tiles">
+        <div class="tile accent">
+          <p class="k" data-i18n="bike.peak">Busiest hour</p>
+          <p class="v" id="tPeak">&mdash;</p>
+        </div>
+        <div class="tile">
+          <p class="k" data-i18n="bike.quiet">Quietest hour</p>
+          <p class="v" id="tQuiet">&mdash;</p>
+        </div>
+        <div class="tile">
+          <p class="k" data-i18n="bike.total">Rentals that day</p>
+          <p class="v" id="tTotal">&mdash;</p>
+        </div>
+        <div class="tile">
+          <p class="k" id="tSelK">At 08:00</p>
+          <p class="v" id="tSel">&mdash;</p>
+        </div>
+      </div>
+
+      <form class="controls" id="bikeForm" novalidate>
+        <div class="field">
+          <label for="season" data-i18n="bike.f.season">Season</label>
+          <select id="season"></select>
+        </div>
+        <div class="field">
+          <label for="yr" data-i18n="bike.f.year">Year</label>
+          <select id="yr">
+            <option value="0">2011</option>
+            <option value="1" selected>2012</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mnth" data-i18n="bike.f.month">Month</label>
+          <select id="mnth"></select>
+        </div>
+
+        <div class="field">
+          <label for="weekday" data-i18n="bike.f.weekday">Day of week</label>
+          <select id="weekday"></select>
+        </div>
+        <div class="field">
+          <label for="holiday" data-i18n="bike.f.holiday">Public holiday</label>
+          <select id="holiday">
+            <option value="0" data-i18n="bike.no">No</option>
+            <option value="1" data-i18n="bike.yes">Yes</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="weathersit" data-i18n="bike.f.weather">Weather</label>
+          <select id="weathersit"></select>
+          <p class="rare-note" id="rareNote" hidden></p>
+        </div>
+
+        <div class="field">
+          <div class="range-top">
+            <label for="temp" data-i18n="bike.f.temp">Temperature</label>
+            <output id="outTemp"></output>
+          </div>
+          <input type="range" id="temp" min="0" max="1" step="0.02" value="0.5" />
+        </div>
+        <div class="field">
+          <div class="range-top">
+            <label for="hum" data-i18n="bike.f.hum">Humidity</label>
+            <output id="outHum"></output>
+          </div>
+          <input type="range" id="hum" min="0" max="1" step="0.02" value="0.62" />
+        </div>
+        <div class="field">
+          <div class="range-top">
+            <label for="windspeed" data-i18n="bike.f.wind">Wind speed</label>
+            <output id="outWind"></output>
+          </div>
+          <input type="range" id="windspeed" min="0" max="0.8507" step="0.02" value="0.19" />
+        </div>
+      </form>
+
+      <div class="result-note" style="margin-top: 26px;">
+        <strong data-i18n="bike.note.title">What you are looking at</strong><br />
+        <span data-i18n="bike.note">Hour of day drives roughly 57&nbsp;% of this model.</span>
+      </div>
+
+      <div class="section-footer-link" style="margin-top: 34px;">
+        <a class="btn btn-ghost" href="https://github.com/sufyan1105/Bike-sharing-demand-prediction" target="_blank" rel="noopener" data-i18n="demo.notebook">View the notebook on GitHub &rarr;</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>&copy; <span id="year">2026</span> Sufyan Arshad Kadiwala.</p>
+    <p class="footer-legal">
+      <a href="../../impressum.html" data-i18n="footer.impressum">Impressum</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="../../datenschutz.html" data-i18n="footer.datenschutz">Datenschutzerkl&auml;rung</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../../js/i18n.js?v=9d00960e"></script>
+<script src="../../js/script.js?v=21cb9b6d"></script>
+<script src="predict.js"></script>
+<script src="app.js" defer></script>
+</body>
+</html>

@@ -22,3 +22,6 @@ assets/sufyan image.png
 # personal German trainer source: .venv, __pycache__, and a vocab.db
 # holding review history. german/ is the built static copy that ships.
 /German Language/
+
+# notebook source repo (has its own .git; would become a broken gitlink)
+/Bike Sharing Demand Prediction/

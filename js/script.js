@@ -84,11 +84,12 @@ const projects = [
       de: "Nachfragevorhersage für Bike-Sharing",
     },
     desc: {
-      en: "Demand forecasting on the bike-sharing dataset (hourly and daily records), predicting rental counts from weather and calendar features.",
-      de: "Nachfrageprognose auf dem Bike-Sharing-Datensatz (Stunden- und Tagesdaten): Vorhersage der Ausleihzahlen aus Wetter- und Kalendermerkmalen.",
+      en: "Hourly rental demand for Capital Bikeshare, evaluated on a chronological split rather than a random one. Random Forest reached R² 0.893 (RMSE 72 rides), 34 R² points above a Ridge baseline — hour of day carries 57 % of the model, and its two commuter peaks are a shape no linear model can fit.",
+      de: "Stundengenaue Nachfrage nach Leihrädern bei Capital Bikeshare, bewertet auf einem chronologischen statt zufälligen Split. Random Forest erreichte R² 0,893 (RMSE 72 Ausleihen) und damit 34 R²-Punkte über der Ridge-Baseline — die Tagesstunde trägt 57 % des Modells, und ihre zwei Pendlerspitzen sind eine Form, die kein lineares Modell abbilden kann.",
     },
-    tags: ["Python", "Regression", "EDA", "Time Series"],
+    tags: ["Python", "Scikit-learn", "Random Forest", "Time Series", "Feature Engineering"],
     code: "https://github.com/sufyan1105/Bike-sharing-demand-prediction",
+    live: "projects/bike-sharing/",
   },
   {
     icon: "🔢",
