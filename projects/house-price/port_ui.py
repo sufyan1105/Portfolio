@@ -285,6 +285,13 @@ const dec = (v, n) => v.toLocaleString(nfLocale(), {minimumFractionDigits:n, max
      "<div><span class=\"field-name\" data-i18n=\"hp.n.${spec.key}\">${t('hp.n.' + spec.key)}</span>"
      "<span class=\"field-help\" data-i18n=\"hp.h.${spec.key}\">${t('hp.h.' + spec.key)}</span></div>"),
 
+    # The sliders had no accessible name — a screen reader announced ten
+    # unlabelled "slider"s. The visible name sits in a sibling <span>, not a
+    # <label>, so it is attached with aria-label and kept translated.
+    ("""    <input type="range" min="${lo}" max="${hi}" step="${spec.step}">`;""",
+     """    <input type="range" min="${lo}" max="${hi}" step="${spec.step}"
+      aria-label="${t('hp.n.' + spec.key)}" data-i18n-aria="hp.n.${spec.key}">`;"""),
+
     # A data-i18n-title lets applyLang keep the tooltip in step too.
     ("  out.title = 'Click to type an exact value';",
      "  out.setAttribute('data-i18n-title', 'hp.edit.hint');\n"

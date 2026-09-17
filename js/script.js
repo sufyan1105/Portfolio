@@ -400,6 +400,12 @@ function t(key) {
   return dict[key] != null ? dict[key] : I18N.en[key] || "";
 }
 
+const entityDecoder = document.createElement("textarea");
+function decodeEntities(html) {
+  entityDecoder.innerHTML = html;
+  return entityDecoder.value;
+}
+
 function applyLang(lang) {
   if (!SUPPORTED_LANGS.includes(lang)) lang = "en";
   const root = document.documentElement;
@@ -422,7 +428,10 @@ function applyLang(lang) {
   Object.entries(attrMap).forEach(([dataAttr, target]) => {
     document.querySelectorAll(`[${dataAttr}]`).forEach((el) => {
       const val = t(el.getAttribute(dataAttr));
-      if (val) el.setAttribute(target, val);
+      // Translations are authored as HTML (&auml;, &mdash;) because most of
+      // them go through innerHTML above. setAttribute does not decode, so
+      // without this the German meta descriptions read "f&uuml;r" literally.
+      if (val) el.setAttribute(target, decodeEntities(val));
     });
   });
 
@@ -658,15 +667,21 @@ async function copyText(text) {
 function initCopyEmail() {
   document.querySelectorAll("[data-copy-email]").forEach((btn) => {
     const label = btn.querySelector("[data-copy-label]") || btn;
+    let timer = null;
     btn.addEventListener("click", async (e) => {
       e.preventDefault();
-      const original = label.textContent;
       const ok = await copyText(EMAIL);
+      btn.classList.remove("copied", "copy-failed");
       btn.classList.add(ok ? "copied" : "copy-failed");
       label.textContent = t(ok ? "contact.copied" : "contact.copyfail");
-      window.setTimeout(() => {
+      // Restore from the translation key, never from whatever the label said a
+      // moment ago: a second click inside the window used to capture "Copied!"
+      // as the original and leave the button stuck on it for good. Reading the
+      // key also picks up a language switch made while the feedback showed.
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
         btn.classList.remove("copied", "copy-failed");
-        label.textContent = original;
+        label.textContent = t(label.getAttribute("data-i18n") || "contact.copy");
       }, 1800);
     });
   });

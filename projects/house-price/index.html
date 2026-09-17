@@ -353,7 +353,7 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
   *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
-<link rel="stylesheet" href="../../css/style.css?v=40534a83" />
+<link rel="stylesheet" href="../../css/style.css?v=4497ea01" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230e7c86'/%3E%3Ctext x='50' y='68' font-size='55' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E" />
 <link rel="canonical" href="https://sufyankadiwala.de/projects/house-price/" />
 <meta property="og:type" content="website" />
@@ -537,8 +537,8 @@ footer a:hover{color:var(--hp-teal);border-color:var(--hp-teal)}
   </footer>
 </div>
 
-<script src="../../js/i18n.js?v=9d00960e"></script>
-<script src="../../js/script.js?v=251ded2b"></script>
+<script src="../../js/i18n.js?v=3bd16a5f"></script>
+<script src="../../js/script.js?v=ce8f14a7"></script>
 <script src="predict.js"></script>
 <script>
 /* ══════════════════════════════════════════════════════════════
@@ -767,7 +767,8 @@ function buildField(spec, host){
       <div><span class="field-name" data-i18n="hp.n.${spec.key}">${t('hp.n.' + spec.key)}</span><span class="field-help" data-i18n="hp.h.${spec.key}">${t('hp.h.' + spec.key)}</span></div>
       <span class="field-val"></span>
     </div>
-    <input type="range" min="${lo}" max="${hi}" step="${spec.step}">`;
+    <input type="range" min="${lo}" max="${hi}" step="${spec.step}"
+      aria-label="${t('hp.n.' + spec.key)}" data-i18n-aria="hp.n.${spec.key}">`;
   host.appendChild(el);
 
   const range = el.querySelector('input[type=range]');

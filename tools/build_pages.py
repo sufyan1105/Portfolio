@@ -8,7 +8,7 @@ Run it after changing anything in SHELL / the PAGES bodies below:
 
     python3 tools/build_pages.py
 """
-import os, hashlib
+import os, re, hashlib
 
 # ---- Update this once the custom domain is live -----------------------------
 SITE_URL = "https://sufyankadiwala.de"
@@ -32,7 +32,7 @@ SHELL = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title data-i18n="meta.title.{page}">{title_en}</title>
 <meta name="description" data-i18n-content="meta.desc.{page}" content="{desc_en}" />
-<link rel="canonical" href="{site}/{file}" />
+{head_extra}
 
 <!-- Link previews (LinkedIn, WhatsApp, Slack, email clients) -->
 <meta property="og:type" content="website" />
@@ -41,7 +41,7 @@ SHELL = """<!DOCTYPE html>
 <meta property="og:locale:alternate" content="de_DE" />
 <meta property="og:title" content="{title_en}" />
 <meta property="og:description" content="{desc_en}" />
-<meta property="og:url" content="{site}/{file}" />
+<meta property="og:url" content="{url}" />
 <meta property="og:image" content="{site}/assets/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -195,13 +195,16 @@ INDEX_BODY = """
       <div class="hero-actions">
         <a href="projects.html" class="btn btn-primary" data-i18n="hero.cta.projects">View Projects</a>
         <a href="about.html" class="btn btn-ghost" data-i18n="hero.cta.about">About Me</a>
+        <!-- CV button: restore once cv.pdf is in the repo root. Until then the path
+             has nothing behind it, and a download button that 404s is worse than none.
         <a href="cv.pdf" class="btn btn-ghost btn-resume" data-i18n="hero.cta.resume">CV &darr;</a>
+        -->
       </div>
 
       <div class="hero-socials">
         <a href="__GITHUB__" target="_blank" rel="noopener" aria-label="GitHub profile" data-i18n-aria="hero.social.github">__ICON_GH__</a>
         <a href="__LINKEDIN__" target="_blank" rel="noopener" aria-label="LinkedIn profile" data-i18n-aria="hero.social.linkedin">__ICON_LI__</a>
-        <a href="mailto:kadiwalasufyan03@gmail.com" data-email-link aria-label="Send email" data-i18n-aria="hero.social.email">__ICON_MAIL__</a>
+        <!--email_off--><a href="mailto:kadiwalasufyan03@gmail.com" data-email-link aria-label="Send email" data-i18n-aria="hero.social.email">__ICON_MAIL__</a><!--/email_off-->
       </div>
     </div>
   </section>
@@ -335,6 +338,7 @@ PROJECTS_BODY = """
   <section class="section">
     <div class="container">
       <noscript><p class="nojs-note" data-i18n="footer.nojs">This site needs JavaScript for the language toggle and the project list. Everything else works without it.</p></noscript>
+      <h2 class="sr-only" data-i18n="projects.list">All projects</h2>
       <div class="project-grid" id="projectGrid"></div>
     </div>
   </section>
@@ -354,20 +358,20 @@ CONTACT_BODY = """
     <div class="container">
 
       <div class="contact-email reveal">
-        <span class="addr" data-email-text>kadiwalasufyan03@gmail.com</span>
+        <!--email_off--><span class="addr" data-email-text>kadiwalasufyan03@gmail.com</span><!--/email_off-->
         <button type="button" class="copy-btn" data-copy-email aria-label="Copy email address" data-i18n-aria="contact.copy">
           <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg>
-          <span data-copy-label data-i18n="contact.copy">Copy email address</span>
+          <span data-copy-label data-i18n="contact.copy" aria-live="polite">Copy email address</span>
         </button>
       </div>
       <p class="contact-hint" data-i18n="contact.hint">Prefer email? Click the address above to copy it — no mail app required.</p>
 
       <div class="contact-grid">
-        <a class="contact-card reveal" href="mailto:kadiwalasufyan03@gmail.com" data-email-link>
+        <!--email_off--><a class="contact-card reveal" href="mailto:kadiwalasufyan03@gmail.com" data-email-link>
           __ICON_MAIL__
           <span data-i18n="contact.email">Email</span>
-        </a>
+        </a><!--/email_off-->
         <a class="contact-card reveal" href="__GITHUB__" target="_blank" rel="noopener">
           __ICON_GH__
           <span data-i18n="contact.github">GitHub</span>
@@ -431,7 +435,7 @@ IMPRESSUM_BODY = """
 
       <h2 data-i18n="imp.h.contact">Kontakt</h2>
       <p>
-        E-Mail: <a href="mailto:kadiwalasufyan03@gmail.com" data-email-link><span data-email-text>kadiwalasufyan03@gmail.com</span></a><br />
+        <!--email_off-->E-Mail: <a href="mailto:kadiwalasufyan03@gmail.com" data-email-link><span data-email-text>kadiwalasufyan03@gmail.com</span></a><!--/email_off--><br />
         Telefon: +49 176 28266324
       </p>
 
@@ -489,6 +493,22 @@ DATENSCHUTZ_BODY = """
   </section>
 """
 
+
+NOTFOUND_BODY = """
+  <section class="section page-hero">
+    <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="container hero-anim">
+      <p class="section-eyebrow">404</p>
+      <h1 class="section-title" data-i18n="nf.title">This page doesn't exist</h1>
+      <p class="section-intro" data-i18n="nf.text">The link may be out of date, or the address mistyped. Everything on this site is reachable from the pages below.</p>
+      <div class="hero-actions" style="margin-top: 26px;">
+        <a href="index.html" class="btn btn-primary" data-i18n="nf.home">Back to the homepage</a>
+        <a href="projects.html" class="btn btn-ghost" data-i18n="nf.projects">See the projects</a>
+      </div>
+    </div>
+  </section>
+"""
+
 PAGES = {
     "index": ("index.html", INDEX_BODY,
               "Sufyan Arshad Kadiwala — Data Science &amp; ML Portfolio",
@@ -511,6 +531,13 @@ PAGES = {
     "contact": ("contact.html", CONTACT_BODY,
                 "Contact — Sufyan Arshad Kadiwala",
                 "Get in touch with Sufyan Arshad Kadiwala — open to Werkstudent and internship roles in Germany."),
+    # Without a top-level 404.html, Cloudflare Pages treats the site as a
+    # single-page app and answers EVERY unknown path with the homepage and a
+    # 200 — so a mistyped link, a dead cv.pdf or a probe for sitemap.xml all
+    # looked like a valid duplicate of the homepage.
+    "404": ("404.html", NOTFOUND_BODY,
+            "Page not found — Sufyan Arshad Kadiwala",
+            "This page does not exist."),
 }
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -537,8 +564,16 @@ for page, (fname, body, title, desc) in PAGES.items():
             .replace("__ICON_GH__", ICON_GITHUB)
             .replace("__ICON_LI__", ICON_LINKEDIN)
             .replace("__ICON_MAIL__", ICON_MAIL))
-    html = SHELL.format(page=page, file=fname, site=SITE_URL, favicon=FAVICON,
-                        title_en=title, desc_en=desc, body=body, **V)
+    # The URL Cloudflare actually serves: /about.html 308-redirects to /about.
+    url = SITE_URL + "/" if page in ("index", "404") else f"{SITE_URL}/{fname[:-len('.html')]}"
+    head_extra = ('<meta name="robots" content="noindex" />' if page == "404"
+                  else f'<link rel="canonical" href="{url}" />')
+    html = SHELL.format(page=page, file=fname, site=SITE_URL, favicon=FAVICON, url=url,
+                        head_extra=head_extra, title_en=title, desc_en=desc, body=body, **V)
+    if page == "404":
+        # Served at whatever path was requested, e.g. /projects/typo/deeper —
+        # so relative css/js/nav paths would resolve against that and break.
+        html = re.sub(r'((?:href|src)=")(?!https?:|/|#|data:|mailto:|tel:)', r"\1/", html)
     with open(os.path.join(root, fname), "w") as fh:
         fh.write(html)
     print("wrote", fname)
@@ -565,3 +600,25 @@ def stamp_demo_pages():
 
 
 stamp_demo_pages()
+
+
+# Generated from PAGES plus the demo directories, so a new page cannot be
+# forgotten. Deliberately absent: 404.html, and /german/, which is unlisted.
+def write_sitemap():
+    import glob
+    urls = [SITE_URL + "/" if k == "index" else f"{SITE_URL}/{f[:-len('.html')]}"
+            for k, (f, *_rest) in PAGES.items() if k != "404"]
+    urls += [f"{SITE_URL}/projects/{os.path.basename(os.path.dirname(d))}/"
+             for d in sorted(glob.glob(os.path.join(root, "projects", "*", "index.html")))]
+    xml = ['<?xml version="1.0" encoding="UTF-8"?>',
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    xml += [f"  <url><loc>{u}</loc></url>" for u in urls]
+    xml.append("</urlset>")
+    with open(os.path.join(root, "sitemap.xml"), "w") as fh:
+        fh.write("\n".join(xml) + "\n")
+    with open(os.path.join(root, "robots.txt"), "w") as fh:
+        fh.write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n")
+    print(f"wrote sitemap.xml ({len(urls)} urls), robots.txt")
+
+
+write_sitemap()

@@ -366,6 +366,13 @@ const I18N = {
     "hp.l.households": "Households",
     "hp.l.ocean_proximity": "Ocean proximity",
 
+    "nf.title": "This page doesn't exist",
+    "nf.text": "The link may be out of date, or the address mistyped. Everything on this site is reachable from the pages below.",
+    "nf.home": "Back to the homepage",
+    "nf.projects": "See the projects",
+    "meta.title.404": "Page not found — Sufyan Arshad Kadiwala",
+    "meta.desc.404": "This page does not exist.",
+    "projects.list": "All projects",
     // Footer
     "footer.text": "Built with HTML, CSS &amp; JavaScript.",
     "footer.impressum": "Impressum",
@@ -723,6 +730,13 @@ const I18N = {
     "hp.l.households": "Haushalte",
     "hp.l.ocean_proximity": "K&uuml;stenn&auml;he",
 
+    "nf.title": "Diese Seite gibt es nicht",
+    "nf.text": "Der Link ist vielleicht veraltet oder die Adresse vertippt. Alles auf dieser Website ist &uuml;ber die Seiten unten erreichbar.",
+    "nf.home": "Zur Startseite",
+    "nf.projects": "Zu den Projekten",
+    "meta.title.404": "Seite nicht gefunden — Sufyan Arshad Kadiwala",
+    "meta.desc.404": "Diese Seite existiert nicht.",
+    "projects.list": "Alle Projekte",
     "footer.text": "Erstellt mit HTML, CSS &amp; JavaScript.",
     "footer.impressum": "Impressum",
     "footer.nojs": "Für den Sprachumschalter und die Projektliste wird JavaScript benötigt. Alles andere funktioniert auch ohne.",
