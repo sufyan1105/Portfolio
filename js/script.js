@@ -209,7 +209,6 @@ const education = [
       de: "Rizvi College of Engineering, University of Mumbai",
     },
     location: { en: "Mumbai, India", de: "Mumbai, Indien" },
-    note: { en: "Final grade: CGPA 8.05 / 10.00", de: "Abschlussnote: CGPA 8,05 / 10,00" },
   },
 ];
 
@@ -222,7 +221,6 @@ function educationItemHTML(e) {
       }</p>
       <h3>${pick(e.degree)}</h3>
       ${org ? `<p class="timeline-org">${org}</p>` : ""}
-      ${e.note ? `<p class="timeline-note">${pick(e.note)}</p>` : ""}
     </li>
   `;
 }
