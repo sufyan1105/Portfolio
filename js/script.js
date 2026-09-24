@@ -204,10 +204,7 @@ const education = [
       en: "B.E. Artificial Intelligence &amp; Data Science, Major (Honours) in Cyber Security",
       de: "B.E. K&uuml;nstliche Intelligenz &amp; Data Science, Major (Honours) in Cyber Security",
     },
-    institution: {
-      en: "Rizvi College of Engineering, University of Mumbai",
-      de: "Rizvi College of Engineering, University of Mumbai",
-    },
+    institution: { en: "University of Mumbai", de: "University of Mumbai" },
     location: { en: "Mumbai, India", de: "Mumbai, Indien" },
   },
 ];
