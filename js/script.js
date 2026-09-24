@@ -199,12 +199,17 @@ const education = [
   },
   {
     period: { en: "Winter 2021 — Summer 2025", de: "Wintersemester 2021 — Sommersemester 2025" },
+    // Exactly as awarded on the degree certificate (conferred 17 Jan 2026).
     degree: {
-      en: "Bachelor's degree, AI &amp; Data Science",
-      de: "Bachelorabschluss, KI &amp; Data Science",
+      en: "B.E. Artificial Intelligence &amp; Data Science, Major (Honours) in Cyber Security",
+      de: "B.E. K&uuml;nstliche Intelligenz &amp; Data Science, Major (Honours) in Cyber Security",
     },
-    institution: { en: "University of Mumbai", de: "University of Mumbai" },
+    institution: {
+      en: "Rizvi College of Engineering, University of Mumbai",
+      de: "Rizvi College of Engineering, University of Mumbai",
+    },
     location: { en: "Mumbai, India", de: "Mumbai, Indien" },
+    note: { en: "Final grade: CGPA 8.05 / 10.00", de: "Abschlussnote: CGPA 8,05 / 10,00" },
   },
 ];
 
@@ -217,6 +222,7 @@ function educationItemHTML(e) {
       }</p>
       <h3>${pick(e.degree)}</h3>
       ${org ? `<p class="timeline-org">${org}</p>` : ""}
+      ${e.note ? `<p class="timeline-note">${pick(e.note)}</p>` : ""}
     </li>
   `;
 }
