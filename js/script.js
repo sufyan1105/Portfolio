@@ -441,6 +441,8 @@ function applyLang(lang) {
     });
   });
 
+  initCvLink();
+
   // Re-render the JS-driven cards in the new language
   render("projectGrid", projects, projectCardHTML);
   render("featuredGrid", projects.filter((p) => p.featured), projectCardHTML);
@@ -668,6 +670,12 @@ async function copyText(text) {
   } catch (e) {
     return false; // denied permission, or a browser without the Clipboard API
   }
+}
+
+/** German CV by default; English readers get the English one. */
+function initCvLink() {
+  const file = currentLang() === "de" ? "cv.pdf" : "cv-en.pdf";
+  document.querySelectorAll("[data-cv-link]").forEach((a) => a.setAttribute("href", file));
 }
 
 function initCopyEmail() {

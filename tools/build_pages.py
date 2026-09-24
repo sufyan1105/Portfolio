@@ -195,10 +195,10 @@ INDEX_BODY = """
       <div class="hero-actions">
         <a href="projects.html" class="btn btn-primary" data-i18n="hero.cta.projects">View Projects</a>
         <a href="about.html" class="btn btn-ghost" data-i18n="hero.cta.about">About Me</a>
-        <!-- CV button: restore once cv.pdf is in the repo root. Until then the path
-             has nothing behind it, and a download button that 404s is worse than none.
-        <a href="cv.pdf" class="btn btn-ghost btn-resume" data-i18n="hero.cta.resume">CV &darr;</a>
-        -->
+        <!-- href is swapped to cv-en.pdf in English by initCvLink(); cv.pdf (German)
+             is the default because the site is aimed at employers in Germany. -->
+        <a href="cv.pdf" class="btn btn-ghost btn-resume" data-cv-link target="_blank"
+           rel="noopener" data-i18n="hero.cta.resume">CV &darr;</a>
       </div>
 
       <div class="hero-socials">
