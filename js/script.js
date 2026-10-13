@@ -711,10 +711,8 @@ function initReveal() {
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          io.unobserve(entry.target);
-        }
+        // toggled both ways so cards replay when scrolled back into view
+        entry.target.classList.toggle("visible", entry.isIntersecting);
       });
     },
     { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
@@ -725,6 +723,9 @@ function initReveal() {
 // ---------- Header state + scroll progress ----------
 function initScrollFx() {
   const header = document.querySelector(".site-header");
+  // Home hero: --p runs 0 -> 1 as the hero scrolls away; CSS turns it into parallax.
+  const hero = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? null : document.querySelector(".hero");
   const bar = document.createElement("div");
   bar.className = "scroll-progress";
   document.body.appendChild(bar);
@@ -735,6 +736,7 @@ function initScrollFx() {
     header?.classList.toggle("scrolled", scrollTop > 10);
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + "%";
+    if (hero) hero.style.setProperty("--p", Math.min(scrollTop / hero.offsetHeight, 1).toFixed(4));
     ticking = false;
   }
   update();

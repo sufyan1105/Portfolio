@@ -14,8 +14,8 @@ import os, re, hashlib
 SITE_URL = "https://sufyankadiwala.de"
 
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E"
-           "%3Crect width='100' height='100' rx='20' fill='%230e7c86'/%3E%3Ctext x='50' y='68' "
-           "font-size='55' font-family='Arial, sans-serif' font-weight='bold' fill='white' "
+           "%3Crect width='100' height='100' rx='20' fill='%23181A2F'/%3E%3Ctext x='50' y='68' "
+           "font-size='55' font-family='Arial, sans-serif' font-weight='bold' fill='%23FDA481' "
            "text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E")
 
 GITHUB = "https://github.com/sufyan1105"
@@ -50,11 +50,11 @@ SHELL = """<!DOCTYPE html>
 <meta name="twitter:title" content="{title_en}" />
 <meta name="twitter:description" content="{desc_en}" />
 <meta name="twitter:image" content="{site}/assets/og-image.png" />
-<meta name="theme-color" content="#0e7c86" />
+<meta name="theme-color" content="#181a2f" />
 
 <link rel="icon" href="{favicon}" />
 
-<!-- Fonts are self-hosted in assets/fonts (see css/style.css) - no request leaves this origin -->
+<!-- System fonts only (Verdana + Helvetica, see css/style.css) - no font request leaves this origin -->
 <link rel="stylesheet" href="css/style.css?v={v_css}" />
 
 <!-- Set theme + language before first paint so there is no flash -->
@@ -182,29 +182,38 @@ INDEX_BODY = """
   <!-- HERO -->
   <section class="hero">
     <div class="aurora-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+    <!-- decorative: the name is the h1 below; the portrait is the same photo as the About avatar -->
+    <div class="hero-stage" aria-hidden="true">
+      <p class="hero-word"><span>S</span><span>U</span><span>F</span><span>Y</span><span>A</span><span>N</span></p>
+      <img class="hero-portrait" src="assets/hero-portrait.webp" alt="" width="760" height="653" fetchpriority="high" />
+      <p class="hero-caption left" data-i18n="avail.roles.value">Werkstudent &middot; Internship</p>
+      <p class="hero-caption right" data-i18n="avail.location.value">Hof, Bavaria</p>
+    </div>
     <div class="container hero-anim hero-inner">
-      <p class="eyebrow" data-i18n="hero.eyebrow">Hi, I'm</p>
-      <h1 class="hero-title" data-i18n="hero.title">Sufyan Arshad Kadiwala</h1>
-      <p class="hero-subtitle" data-i18n="hero.subtitle">Master's Student in <strong>AI &amp; Robotics</strong> &middot; Data Science &amp; Machine Learning</p>
-      <p class="hero-desc" data-i18n="hero.desc">
-        I build practical machine learning projects — from regression &amp; classification models
-        to small AI-powered web apps. Currently studying at Hof University of Applied Sciences, Germany,
-        and looking for a <strong>Werkstudent</strong> position, an internship, or remote data science work.
-      </p>
-
-      <div class="hero-actions">
-        <a href="projects.html" class="btn btn-primary" data-i18n="hero.cta.projects">View Projects</a>
-        <a href="about.html" class="btn btn-ghost" data-i18n="hero.cta.about">About Me</a>
-        <!-- href is swapped to cv-en.pdf in English by initCvLink(); cv.pdf (German)
-             is the default because the site is aimed at employers in Germany. -->
-        <a href="cv.pdf" class="btn btn-ghost btn-resume" data-cv-link target="_blank"
-           rel="noopener" data-i18n="hero.cta.resume">CV &darr;</a>
+      <div>
+        <p class="eyebrow" data-i18n="hero.eyebrow">Hi, I'm</p>
+        <h1 class="hero-title" data-i18n="hero.title">Sufyan Arshad Kadiwala</h1>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">Master's Student in <strong>AI &amp; Robotics</strong> &middot; Data Science &amp; Machine Learning</p>
       </div>
-
-      <div class="hero-socials">
-        <a href="__GITHUB__" target="_blank" rel="noopener" aria-label="GitHub profile" data-i18n-aria="hero.social.github">__ICON_GH__</a>
-        <a href="__LINKEDIN__" target="_blank" rel="noopener" aria-label="LinkedIn profile" data-i18n-aria="hero.social.linkedin">__ICON_LI__</a>
-        <!--email_off--><a href="mailto:kadiwalasufyan03@gmail.com" data-email-link aria-label="Send email" data-i18n-aria="hero.social.email">__ICON_MAIL__</a><!--/email_off-->
+      <div>
+        <p class="hero-desc" data-i18n="hero.desc">
+          I build practical machine learning projects — from regression &amp; classification models
+          to small AI-powered web apps. Currently studying at Hof University of Applied Sciences, Germany,
+          and looking for a <strong>Werkstudent</strong> position, an internship, or remote data science work.
+        </p>
+        <div class="hero-actions">
+          <a href="projects.html" class="btn btn-primary" data-i18n="hero.cta.projects">View Projects</a>
+          <a href="about.html" class="btn btn-ghost" data-i18n="hero.cta.about">About Me</a>
+          <!-- href is swapped to cv-en.pdf in English by initCvLink(); cv.pdf (German)
+               is the default because the site is aimed at employers in Germany. -->
+          <a href="cv.pdf" class="btn btn-ghost btn-resume" data-cv-link target="_blank"
+             rel="noopener" data-i18n="hero.cta.resume">CV &darr;</a>
+        </div>
+        <div class="hero-socials">
+          <a href="__GITHUB__" target="_blank" rel="noopener" aria-label="GitHub profile" data-i18n-aria="hero.social.github">__ICON_GH__</a>
+          <a href="__LINKEDIN__" target="_blank" rel="noopener" aria-label="LinkedIn profile" data-i18n-aria="hero.social.linkedin">__ICON_LI__</a>
+          <!--email_off--><a href="mailto:kadiwalasufyan03@gmail.com" data-email-link aria-label="Send email" data-i18n-aria="hero.social.email">__ICON_MAIL__</a><!--/email_off-->
+        </div>
       </div>
     </div>
   </section>
