@@ -89,10 +89,12 @@ const I18N = {
 
     // Experience
     "exp.eyebrow": "Experience",
-    "exp.title": "Internships &amp; practical work",
+    "exp.title": "Work experience &amp; internships",
     "exp.kind.internship": "Internship",
+    "exp.kind.parttime": "Part-time job",
     "exp.kind.simulation": "Job simulation",
     "exp.mode.remote": "Remote",
+    "exp.mode.hybrid": "Hybrid",
     "exp.certificate": "View certificate",
 
     // Education
@@ -455,10 +457,12 @@ const I18N = {
 
     // Erfahrung
     "exp.eyebrow": "Erfahrung",
-    "exp.title": "Praktika &amp; praktische Erfahrung",
+    "exp.title": "Berufserfahrung &amp; Praktika",
     "exp.kind.internship": "Praktikum",
+    "exp.kind.parttime": "Teilzeitstelle",
     "exp.kind.simulation": "Job-Simulation",
     "exp.mode.remote": "Remote",
+    "exp.mode.hybrid": "Hybrid",
     "exp.certificate": "Zertifikat ansehen",
 
     // Ausbildung

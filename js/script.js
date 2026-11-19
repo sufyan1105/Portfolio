@@ -26,10 +26,10 @@ const projects = [
       de: "KI-Lernassistent auf RAG-Basis",
     },
     desc: {
-      en: "A five-stage pipeline turning raw course videos into a queryable assistant: video → MP3 → timestamped transcript chunks → bge-m3 embeddings → Llama 3.2. A question is embedded, matched against the vector store by cosine similarity, and the top five chunks are handed to the model, which answers with the video name and the timestamp to jump to. Every stage runs locally through Ollama, so no lecture content leaves the machine.",
-      de: "Eine fünfstufige Pipeline, die Rohvideos einer Vorlesung in einen abfragbaren Assistenten verwandelt: Video → MP3 → Transkript-Abschnitte mit Zeitstempeln → bge-m3-Embeddings → Llama 3.2. Eine Frage wird eingebettet, per Kosinus-Ähnlichkeit gegen den Vektorspeicher gematcht, und die fünf besten Abschnitte gehen an das Modell, das mit Videoname und Zeitstempel antwortet. Alle Stufen laufen lokal über Ollama, es verlässt also kein Vorlesungsinhalt den Rechner.",
+      en: "A five-stage pipeline turning raw course videos into a queryable assistant: video → MP3 → timestamped transcript chunks → bge-m3 embeddings → Llama 3.2, answering with the video name and the timestamp to jump to. Every stage runs locally through Ollama, so no lecture content leaves the machine, and Docker Compose starts it with one command. Evaluated on 30 questions written from the lectures: the right passage was in the top 3 for 27 of 30, with each failure documented and explained.",
+      de: "Eine fünfstufige Pipeline, die Rohvideos einer Vorlesung in einen abfragbaren Assistenten verwandelt: Video → MP3 → Transkript-Abschnitte mit Zeitstempeln → bge-m3-Embeddings → Llama 3.2; die Antwort nennt Videoname und Zeitstempel. Alle Stufen laufen lokal über Ollama, es verlässt also kein Vorlesungsinhalt den Rechner, und Docker Compose startet alles mit einem Befehl. Mit 30 Fragen aus den Vorlesungen evaluiert: Bei 27 von 30 lag die passende Stelle unter den ersten drei Treffern; jeder Fehlerfall ist dokumentiert und erklärt.",
     },
-    tags: ["Python", "RAG", "Ollama", "Llama 3.2", "Embeddings"],
+    tags: ["Python", "RAG", "Ollama", "Llama 3.2", "Docker", "Evaluation"],
     code: "https://github.com/sufyan1105/RAG-based-AI-Teaching-Assistant",
     featured: true,
   },
@@ -141,6 +141,19 @@ const projects = [
    and is labelled as such on purpose.
    ------------------------------------------------------------ */
 const experience = [
+  {
+    kind: "exp.kind.parttime",
+    period: { en: "Dec 2023 — Aug 2025", de: "Dez. 2023 — Aug. 2025" },
+    role: { en: "Sales Analyst", de: "Sales Analyst" },
+    org: { en: "Cure Nutraceutical Pvt. Ltd. &middot; Gujarat, India", de: "Cure Nutraceutical Pvt. Ltd. &middot; Gujarat, Indien" },
+    mode: "exp.mode.hybrid",
+    // Matches the experience certificate dated 13.11.2026. The certificate
+    // itself is not linked: it carries the director's contact details.
+    note: {
+      en: "25 hrs/week alongside my Bachelor's. Analysed sales data with SQL, Python and Excel, wrote regular sales reports for management and built Tableau dashboards to track sales performance. Developed a regression model in Python that forecast customer demand and the following year's sales and revenue; the forecasts were used for target-setting.",
+      de: "25 Std./Woche neben dem Bachelorstudium. Verkaufsdaten mit SQL, Python und Excel ausgewertet, regelmäßige Vertriebsberichte für die Geschäftsführung erstellt und Tableau-Dashboards zur Verfolgung der Vertriebsleistung aufgebaut. Regressionsmodell in Python entwickelt, das Kundennachfrage sowie Absatz und Umsatz des Folgejahres prognostiziert; die Prognosen dienten als Grundlage für die Zielplanung.",
+    },
+  },
   {
     kind: "exp.kind.simulation",
     period: { en: "August 2025", de: "August 2025" },

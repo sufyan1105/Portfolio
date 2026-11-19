@@ -300,7 +300,7 @@ ABOUT_BODY = """
   <section class="section section-alt" id="experience">
     <div class="container">
       <p class="section-eyebrow" data-i18n="exp.eyebrow">Experience</p>
-      <h2 class="section-title" data-i18n="exp.title">Internships &amp; practical work</h2>
+      <h2 class="section-title" data-i18n="exp.title">Work experience &amp; internships</h2>
       <noscript><p class="nojs-note" data-i18n="footer.nojs">This site needs JavaScript for the language toggle and the project list. Everything else works without it.</p></noscript>
       <ol class="timeline" id="experienceList"></ol>
     </div>
