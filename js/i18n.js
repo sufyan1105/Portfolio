@@ -58,7 +58,7 @@ const I18N = {
     "avail.location.value": "Hof, Bavaria",
     "avail.location.note": "Remote or hybrid suits me best from Hof, and I'm happy to travel for on-site days.",
     "avail.lang.label": "Languages",
-    "avail.lang.value": "German B1 · English C1",
+    "avail.lang.value": "German B2 (currently learning) · English C1",
     "avail.lang.note": "Actively improving my German — happy to hold the interview in German.",
     "avail.start.label": "Start date",
     "avail.start.value": "Immediately",
@@ -85,7 +85,7 @@ const I18N = {
     "about.fact.location": "Hof, Germany",
     "about.fact.open": "Open to Werkstudent, internship &amp; Data Science roles — remote or hybrid",
     "about.fact.hours": "Available 20 h/week during the semester, full-time during breaks",
-    "about.fact.lang": "German B1 (and improving) · English C1",
+    "about.fact.lang": "German B2 (currently learning) · English C1",
 
     // Experience
     "exp.eyebrow": "Experience",
@@ -427,7 +427,7 @@ const I18N = {
     "avail.location.value": "Hof, Bayern",
     "avail.location.note": "Von Hof aus passen remote oder hybrid am besten; für Tage vor Ort komme ich gerne.",
     "avail.lang.label": "Sprachen",
-    "avail.lang.value": "Deutsch B1 · Englisch C1",
+    "avail.lang.value": "Deutsch B2 (lerne aktuell) · Englisch C1",
     "avail.lang.note": "Ich verbessere mein Deutsch aktiv — das Vorstellungsgespräch gerne auf Deutsch.",
     "avail.start.label": "Eintrittstermin",
     "avail.start.value": "Ab sofort",
@@ -451,7 +451,7 @@ const I18N = {
     "about.fact.location": "Hof, Deutschland",
     "about.fact.open": "Offen für Werkstudentenstellen, Praktika &amp; Data-Science-Positionen — remote oder hybrid",
     "about.fact.hours": "20 Std./Woche während des Semesters, Vollzeit in den Semesterferien",
-    "about.fact.lang": "Deutsch B1 (wird stetig besser) · Englisch C1",
+    "about.fact.lang": "Deutsch B2 (lerne aktuell) · Englisch C1",
 
     // Erfahrung
     "exp.eyebrow": "Erfahrung",

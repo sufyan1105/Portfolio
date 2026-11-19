@@ -161,7 +161,7 @@ AVAILABILITY = """
         </div>
         <div class="avail-card reveal">
           <p class="label" data-i18n="avail.lang.label">Languages</p>
-          <p class="value" data-i18n="avail.lang.value">German B1 &middot; English C1</p>
+          <p class="value" data-i18n="avail.lang.value">German B2 (currently learning) &middot; English C1</p>
           <p class="note" data-i18n="avail.lang.note">Actively improving my German — happy to hold the interview in German.</p>
         </div>
         <div class="avail-card reveal">
@@ -291,7 +291,7 @@ ABOUT_BODY = """
           <li><span aria-hidden="true">&#128205;</span> <span data-i18n="about.fact.location">Hof, Germany</span></li>
           <li><span aria-hidden="true">&#128188;</span> <span data-i18n="about.fact.open">Open to Werkstudent, internship &amp; Data Science roles — remote or hybrid</span></li>
           <li><span aria-hidden="true">&#9203;</span> <span data-i18n="about.fact.hours">Available 20 h/week during the semester, full-time during breaks</span></li>
-          <li><span aria-hidden="true">&#128172;</span> <span data-i18n="about.fact.lang">German B1 (and improving) &middot; English C1</span></li>
+          <li><span aria-hidden="true">&#128172;</span> <span data-i18n="about.fact.lang">German B2 (currently learning) &middot; English C1</span></li>
         </ul>
       </div>
     </div>
