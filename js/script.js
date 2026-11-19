@@ -92,6 +92,19 @@ const projects = [
     live: "projects/bike-sharing/",
   },
   {
+    icon: "💊",
+    title: {
+      en: "Pharma Sales Forecasting",
+      de: "Absatzprognose für Arzneimittel",
+    },
+    desc: {
+      en: "Weekly sales for two drug categories, trained on 2014–2018 and tested on 40 unseen weeks of 2019, comparing a seasonal-naive baseline, linear regression and Prophet. On seasonal antihistamines, models that learn yearly seasonality cut MAE from 9.69 to about 7.1; on the noisy category, a linear model with month features won (MAPE 14.7 %) and Prophet underpredicted all year — the more complex model did not pay off.",
+      de: "Wöchentlicher Absatz zweier Arzneimittelgruppen, trainiert auf 2014–2018 und geprüft auf 40 ungesehenen Wochen 2019, im Vergleich: saisonale Naiv-Baseline, lineare Regression und Prophet. Bei saisonalen Antihistaminika senkten Modelle mit Jahressaisonalität den MAE von 9,69 auf rund 7,1; bei der verrauschten Gruppe gewann ein lineares Modell mit Monatsmerkmalen (MAPE 14,7 %), während Prophet das ganze Jahr zu niedrig schätzte — das komplexere Modell zahlte sich nicht aus.",
+    },
+    tags: ["Python", "Scikit-learn", "Prophet", "Time Series", "Forecasting"],
+    code: "https://github.com/sufyan1105/Pharma-Sales-Prediction",
+  },
+  {
     icon: "🔢",
     title: {
       en: "Neural Network on MNIST",
