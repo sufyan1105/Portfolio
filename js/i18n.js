@@ -98,6 +98,8 @@ const I18N = {
     "exp.mode.remote": "Remote",
     "exp.mode.hybrid": "Hybrid",
     "exp.certificate": "View certificate",
+    "exp.certRequest": "Certificate available on request &mdash; email me",
+    "exp.certRequest.subject": "Experience certificate request",
 
     // Education
     "edu.eyebrow": "Education",
@@ -468,6 +470,8 @@ const I18N = {
     "exp.mode.remote": "Remote",
     "exp.mode.hybrid": "Hybrid",
     "exp.certificate": "Zertifikat ansehen",
+    "exp.certRequest": "Arbeitszeugnis auf Anfrage &mdash; schreiben Sie mir",
+    "exp.certRequest.subject": "Anfrage Arbeitszeugnis",
 
     // Ausbildung
     "edu.eyebrow": "Ausbildung",

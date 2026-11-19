@@ -148,10 +148,9 @@ const experience = [
     org: { en: "Cure Nutraceutical Pvt. Ltd. &middot; Gujarat, India", de: "Cure Nutraceutical Pvt. Ltd. &middot; Gujarat, Indien" },
     mode: "exp.mode.hybrid",
     // Matches the experience certificate dated 13.11.2026, which says the
-    // company used this regression model for its demand forecasts. The
-    // published copy has the director's mobile and signature redacted (removed
-    // from the file, not covered); the original stays out of git.
-    file: "assets/certificates/cure-nutraceutical-experience-certificate.pdf",
+    // company used this regression model for its demand forecasts. Not
+    // published: it is sent on request, so it is shared only with a recruiter.
+    certOnRequest: true,
     home: true,   // the one entry shown on the home page
     homeNote: {
       en: "25 hrs/week alongside my Bachelor's. Built the regression model the company used for its demand forecasts, plus SQL and Python sales analysis, regular management reports and Tableau dashboards.",
@@ -213,6 +212,7 @@ function experienceItemHTML(e) {
       ${meta ? `<p class="timeline-org">${meta}</p>` : ""}
       ${e.note ? `<p class="timeline-note">${pick(e.note)}</p>` : ""}
       ${e.file ? `<a class="cert-link" href="${e.file}" target="_blank" rel="noopener">${t("exp.certificate")}</a>` : ""}
+      ${e.certOnRequest ? `<a class="cert-link" href="mailto:${EMAIL}?subject=${encodeURIComponent(t("exp.certRequest.subject"))}">${t("exp.certRequest")}</a>` : ""}
     </li>
   `;
 }
