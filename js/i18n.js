@@ -90,6 +90,8 @@ const I18N = {
     // Experience
     "exp.eyebrow": "Experience",
     "exp.title": "Work experience &amp; internships",
+    "home.exp.title": "Where I've worked",
+    "home.exp.cta": "Full experience &rarr;",
     "exp.kind.internship": "Internship",
     "exp.kind.parttime": "Part-time job",
     "exp.kind.simulation": "Job simulation",
@@ -458,6 +460,8 @@ const I18N = {
     // Erfahrung
     "exp.eyebrow": "Erfahrung",
     "exp.title": "Berufserfahrung &amp; Praktika",
+    "home.exp.title": "Wo ich gearbeitet habe",
+    "home.exp.cta": "Gesamte Erfahrung &rarr;",
     "exp.kind.internship": "Praktikum",
     "exp.kind.parttime": "Teilzeitstelle",
     "exp.kind.simulation": "Job-Simulation",

@@ -147,8 +147,16 @@ const experience = [
     role: { en: "Sales Analyst", de: "Sales Analyst" },
     org: { en: "Cure Nutraceutical Pvt. Ltd. &middot; Gujarat, India", de: "Cure Nutraceutical Pvt. Ltd. &middot; Gujarat, Indien" },
     mode: "exp.mode.hybrid",
-    // Matches the experience certificate dated 13.11.2026. The certificate
-    // itself is not linked: it carries the director's contact details.
+    // Matches the experience certificate dated 13.11.2026, which says the
+    // company used this regression model for its demand forecasts. The
+    // published copy has the director's mobile and signature redacted (removed
+    // from the file, not covered); the original stays out of git.
+    file: "assets/certificates/cure-nutraceutical-experience-certificate.pdf",
+    home: true,   // the one entry shown on the home page
+    homeNote: {
+      en: "25 hrs/week alongside my Bachelor's. Built the regression model the company used for its demand forecasts, plus SQL and Python sales analysis, regular management reports and Tableau dashboards.",
+      de: "25 Std./Woche neben dem Bachelorstudium. Das Regressionsmodell gebaut, mit dem das Unternehmen seine Nachfrage prognostizierte, dazu Vertriebsanalysen in SQL und Python, regelmäßige Berichte für die Geschäftsführung und Tableau-Dashboards.",
+    },
     note: {
       en: "25 hrs/week alongside my Bachelor's. Analysed sales data with SQL, Python and Excel, wrote regular sales reports for management and built Tableau dashboards to track sales performance. Developed a regression model in Python that forecast customer demand and the following year's sales and revenue; the forecasts were used for target-setting.",
       de: "25 Std./Woche neben dem Bachelorstudium. Verkaufsdaten mit SQL, Python und Excel ausgewertet, regelmäßige Vertriebsberichte für die Geschäftsführung erstellt und Tableau-Dashboards zur Verfolgung der Vertriebsleistung aufgebaut. Regressionsmodell in Python entwickelt, das Kundennachfrage sowie Absatz und Umsatz des Folgejahres prognostiziert; die Prognosen dienten als Grundlage für die Zielplanung.",
@@ -468,6 +476,9 @@ function applyLang(lang) {
   render("projectGrid", projects, projectCardHTML);
   render("featuredGrid", projects.filter((p) => p.featured), projectCardHTML);
   render("experienceList", experience, experienceItemHTML);
+  render("homeExperience",
+    experience.filter((e) => e.home).map((e) => Object.assign({}, e, { note: e.homeNote })),
+    experienceItemHTML);
   render("educationList", education, educationItemHTML);
   render("skillsGrid", skills, skillCardHTML);
   renderCertificates();

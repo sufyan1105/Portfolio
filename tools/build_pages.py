@@ -243,8 +243,20 @@ INDEX_BODY = """
     </div>
   </section>
 
+  <!-- WORK EXPERIENCE: only the paid role; internships stay on the About page -->
+  <section class="section section-alt" id="home-experience">
+    <div class="container">
+      <p class="section-eyebrow" data-i18n="exp.eyebrow">Experience</p>
+      <h2 class="section-title" data-i18n="home.exp.title">Where I've worked</h2>
+      <ol class="timeline" id="homeExperience"></ol>
+      <div class="section-footer-link">
+        <a href="about.html#experience" class="btn btn-ghost" data-i18n="home.exp.cta">Full experience &rarr;</a>
+      </div>
+    </div>
+  </section>
+
   <!-- FEATURED PROJECTS -->
-  <section class="section section-alt" id="featured">
+  <section class="section" id="featured">
     <div class="container">
       <p class="section-eyebrow" data-i18n="featured.eyebrow">Selected Work</p>
       <h2 class="section-title" data-i18n="featured.title">A few things I've built</h2>

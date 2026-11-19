@@ -25,3 +25,6 @@ assets/sufyan image.png
 
 # notebook source repo (has its own .git; would become a broken gitlink)
 /Bike Sharing Demand Prediction/
+
+# unredacted originals with third-party contact details — never publish
+/EXPERIENCE LETTER*.pdf
